@@ -1,0 +1,196 @@
+/* ============================================================
+   DESIGN SYSTEM: "Incident Report" — Dark Technical Dashboard
+   - Deep charcoal base, Space Grotesk display + Inter body
+   - Severity palette: rose critical, amber warning, emerald safe
+   - Tabular numbers, large display stats
+   ============================================================ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+:root {
+  --radius: 0.5rem;
+  /* Dark theme as default */
+  --background: oklch(0.07 0.005 240);
+  --foreground: oklch(0.9 0.005 240);
+  --card: oklch(0.14 0.005 240);
+  --card-foreground: oklch(0.9 0.005 240);
+  --popover: oklch(0.14 0.005 240);
+  --popover-foreground: oklch(0.9 0.005 240);
+  --primary: oklch(0.65 0.2 220);
+  --primary-foreground: oklch(0.07 0 0);
+  --secondary: oklch(0.18 0.005 240);
+  --secondary-foreground: oklch(0.85 0.005 240);
+  --muted: oklch(0.18 0.005 240);
+  --muted-foreground: oklch(0.55 0.01 240);
+  --accent: oklch(0.2 0.01 240);
+  --accent-foreground: oklch(0.9 0.005 240);
+  --destructive: oklch(0.65 0.22 15);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.22 0.005 240);
+  --input: oklch(0.22 0.005 240);
+  --ring: oklch(0.65 0.2 220);
+
+  /* Severity colors */
+  --severity-critical: #F43F5E;
+  --severity-warning: #FBBF24;
+  --severity-safe: #34D399;
+  --severity-info: #38BDF8;
+  --severity-neutral: #A1A1AA;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html, body, #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .font-mono, code, pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  a[href] {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+      max-width: 1400px;
+    }
+  }
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  /* Severity badge styles */
+  .badge-critical {
+    background: rgba(244, 63, 94, 0.15);
+    color: #F43F5E;
+    border: 1px solid rgba(244, 63, 94, 0.3);
+  }
+  .badge-warning {
+    background: rgba(251, 191, 36, 0.15);
+    color: #FBBF24;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+  }
+  .badge-safe {
+    background: rgba(52, 211, 153, 0.15);
+    color: #34D399;
+    border: 1px solid rgba(52, 211, 153, 0.3);
+  }
+  .badge-info {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38BDF8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+  }
+
+  /* Card glow for critical items */
+  .card-glow-critical {
+    box-shadow: 0 0 20px rgba(244, 63, 94, 0.1), inset 0 1px 0 rgba(244, 63, 94, 0.1);
+  }
+  .card-glow-warning {
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.08), inset 0 1px 0 rgba(251, 191, 36, 0.08);
+  }
+
+  /* Animations */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up {
+    animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes count-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .count-up {
+    animation: count-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes bar-grow {
+    from { width: 0; }
+  }
+  .bar-grow {
+    animation: bar-grow 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes slide-in-left {
+    from { opacity: 0; transform: translateX(-20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .slide-in-left {
+    animation: slide-in-left 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(0.3 0.005 240);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.4 0.005 240);
+  }
+}
