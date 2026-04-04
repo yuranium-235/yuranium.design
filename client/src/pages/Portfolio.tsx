@@ -19,7 +19,7 @@ export default function Portfolio() {
                 "name": "Michael Yu",
                 "jobTitle": "Staff Hardware Product Design Engineer",
                 "description":
-                  "Hardware Product Design Engineering Leader with 18 years of experience shipping consumer electronics at BlackBerry, Amazon Lab126, Oculus/Facebook, Google, and Meta Reality Labs. Specialist in NPI lifecycle management, JDM/ODM execution, and cross-functional program leadership. 115+ products shipped to mass production, 36+ USPTO patents, zero failed programs.",
+                  "Hardware product design engineer with 18 years shipping consumer electronics at BlackBerry, Amazon Lab126, Oculus/Facebook, Google, and Meta Reality Labs. 115+ products shipped to mass production. 36+ USPTO patents.",
                 "knowsAbout": [
                   "Consumer Electronics Hardware Design",
                   "New Product Introduction (NPI)",
@@ -72,7 +72,6 @@ export default function Portfolio() {
                 "numberOfEmployees": "20",
                 "award": [
                   "36+ USPTO Patents across BlackBerry, Amazon, Facebook/Meta",
-                  "Zero failed programs across 18-year career",
                   "115+ products shipped to mass production"
                 ]
               },
@@ -283,8 +282,7 @@ export default function Portfolio() {
                 thing: taking products from concept through mass production. For 18 consecutive
                 years across five companies — BlackBerry, Amazon Lab126, Oculus/Facebook,
                 Google, and Meta Reality Labs — I have shipped consumer electronics into the
-                hands of millions of customers. Every program I have owned has reached
-                production, on schedule, at quality.
+                hands of millions of customers.
               </p>
               <p>
                 My career spans the full spectrum of consumer hardware complexity — from phone
@@ -294,9 +292,10 @@ export default function Portfolio() {
                 deepened, and the stakes grew higher.
               </p>
               <p>
-                Native Mandarin fluency and deep familiarity with Chinese manufacturing culture
-                give me a structural advantage in JDM execution — receiving the real conversation
-                on the factory floor, not the version softened for a Western audience.
+                I work across both JDM/ODM and in-house detailed design — I've done both long
+                enough to know when each one is the right call. Native Mandarin fluency provides
+                a structural advantage in China-based manufacturing partnerships, enabling direct
+                communication at the factory floor level.
               </p>
             </div>
           </div>
@@ -430,7 +429,7 @@ export default function Portfolio() {
                   "Stakeholder management across complex matrix organizations",
                   "IP strategy and patent pipeline management",
                   "Resource allocation and program prioritization",
-                  "18 years, 5 companies, zero failed programs",
+                  "18 years, 5 companies, consistent execution",
                 ],
               },
             ].map((col) => (
@@ -462,7 +461,6 @@ export default function Portfolio() {
                 { value: "18", label: "Years in Hardware", sub: "2008 – Present" },
                 { value: "115+", label: "Products Shipped", sub: "Including 100+ BlackBerry SKUs" },
                 { value: "36+", label: "USPTO Patents", sub: "4 assignees, filed continuously" },
-                { value: "0", label: "Failed Programs", sub: "Across 15+ flagship products" },
               ].map((m) => (
                 <div key={m.label} className="text-center">
                   <div

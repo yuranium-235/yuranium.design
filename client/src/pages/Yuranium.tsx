@@ -3,7 +3,6 @@ import { useEffect } from "react";
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663369013021/W6PHqEe8bVmgPywmzYh9Re/yuranium_hero_6a6505f2.jpg";
 const ABOUT_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663369013021/W6PHqEe8bVmgPywmzYh9Re/yuranium_about_bg_2dd3fc8a.jpg";
 const IMG_SHIPPED = "https://d2xsxph8kpxj0f.cloudfront.net/310519663369013021/W6PHqEe8bVmgPywmzYh9Re/profile_shipped_products_6b4faca4.png";
-const IMG_SCORECARD = "https://d2xsxph8kpxj0f.cloudfront.net/310519663369013021/W6PHqEe8bVmgPywmzYh9Re/profile_execution_scorecard_18d582ab.png";
 const IMG_VELOCITY = "https://d2xsxph8kpxj0f.cloudfront.net/310519663369013021/W6PHqEe8bVmgPywmzYh9Re/profile_shipping_velocity_f2716ba5.png";
 const IMG_SKILLS = "https://d2xsxph8kpxj0f.cloudfront.net/310519663369013021/W6PHqEe8bVmgPywmzYh9Re/profile_skill_architecture_f56a8306.png";
 
@@ -14,7 +13,7 @@ const SCHEMA_JSON = {
   "name": "Michael Xingyi Yu",
   "alternateName": "Michael Yu",
   "jobTitle": "Staff Hardware Engineer",
-  "description": "Hardware product design engineering leader with 18 years of unbroken execution across BlackBerry, Amazon Lab126, Oculus/Facebook, Google, and Meta Reality Labs. Shipped 115+ consumer electronics products to mass production with zero failed programs. 36+ USPTO patents.",
+  "description": "Hardware product design engineer with 18 years shipping consumer electronics at BlackBerry, Amazon Lab126, Oculus/Facebook, Google, and Meta Reality Labs. 115+ products shipped to mass production. 36+ USPTO patents.",
   "url": "https://yuranium.design",
   "sameAs": [
     "https://www.linkedin.com/in/michaelyu84/",
@@ -113,7 +112,7 @@ const experiences = [
     role: "Tech Lead, Hardware Product Design",
     period: "2020 — 2023",
     color: "#4285F4",
-    products: ["Pixel 7 Pro", "Pixel 9 Pro XL", "Pixel Fold"],
+    products: ["Pixel 7 Pro", "Pixel 9 Pro XL"],
     bullets: [
       "Led 12-engineer team delivering Pixel 7 Pro from concept through mass production — full program ownership",
       "Led Pixel 9 Pro XL from concept through first engineering build (~90% design complete)",
@@ -179,7 +178,6 @@ const patents = [
 const metrics = [
   { value: "18", label: "Years in Hardware" },
   { value: "115+", label: "Products Shipped" },
-  { value: "0", label: "Failed Programs" },
   { value: "36+", label: "USPTO Patents" },
   { value: "5", label: "Companies" },
   { value: "20+", label: "Engineers Led" },
@@ -202,7 +200,7 @@ export default function Yuranium() {
     document.title = "Michael Yu — Hardware Engineering Portfolio | yuranium.design";
     const metaDesc = document.querySelector('meta[name="description"]') || document.createElement("meta");
     metaDesc.setAttribute("name", "description");
-    metaDesc.setAttribute("content", "Michael Yu — Staff Hardware Engineer at Meta Reality Labs. 18 years, 115+ products shipped, 36+ patents. Oculus Quest, Pixel 7 Pro, Amazon Echo, Ray-Ban Meta smart glasses.");
+    metaDesc.setAttribute("content", "Michael Yu — Staff Hardware Engineer at Meta Reality Labs. 18 years shipping consumer electronics. Oculus Quest, Pixel 7 Pro, Amazon Echo, Ray-Ban Meta smart glasses. 36+ patents.");
     if (!document.querySelector('meta[name="description"]')) document.head.appendChild(metaDesc);
 
     return () => {
@@ -248,7 +246,7 @@ export default function Yuranium() {
           </h1>
           <p style={{ fontSize: "clamp(1rem, 2vw, 1.25rem)", color: "#A0A0A0", maxWidth: 520, lineHeight: 1.7, marginBottom: "2.5rem" }}>
             18 years. 5 companies. 115+ products shipped to mass production.
-            Zero failed programs. 36+ patents. From BlackBerry accessories to
+            36+ patents. From BlackBerry accessories to
             Oculus Quest to Pixel 7 Pro to Ray-Ban Meta smart glasses.
           </p>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
@@ -286,7 +284,7 @@ export default function Yuranium() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem", maxWidth: 1000 }}>
             <div>
               <p style={{ color: "#A0A0A0", lineHeight: 1.8, fontSize: 16, marginBottom: "1.5rem" }}>
-                For 18 consecutive years across five companies — BlackBerry, Amazon Lab126, Oculus/Facebook, Google, and Meta Reality Labs — I have shipped consumer electronics into the hands of millions of customers. Every program I have owned has reached production, on schedule, at quality.
+                For 18 consecutive years across five companies — BlackBerry, Amazon Lab126, Oculus/Facebook, Google, and Meta Reality Labs — I have shipped consumer electronics into the hands of millions of customers.
               </p>
               <p style={{ color: "#A0A0A0", lineHeight: 1.8, fontSize: 16 }}>
                 My career spans the full spectrum of consumer hardware complexity — from phone accessories at BlackBerry, through tablets and smart speakers at Amazon, VR headsets at Oculus, flagship smartphones at Google, to smart glasses systems at Meta. At each step, the system complexity increased, the integration challenges deepened, and the stakes grew higher.
@@ -294,13 +292,8 @@ export default function Yuranium() {
             </div>
             <div>
               <p style={{ color: "#A0A0A0", lineHeight: 1.8, fontSize: 16, marginBottom: "1.5rem" }}>
-                I have mastered both JDM/ODM and in-house detailed design execution models — rare in the industry. Native Mandarin fluency provides a structural advantage in China-based manufacturing partnerships, enabling unfiltered communication at the factory floor level that Western engineers operating through interpreters cannot access.
+                I work across both JDM/ODM and in-house detailed design — I've done both long enough to know when each one is the right call. Native Mandarin fluency provides a structural advantage in China-based manufacturing partnerships, enabling direct communication at the factory floor level.
               </p>
-              <div style={{ borderLeft: "2px solid #C9A84C", paddingLeft: "1.5rem", marginTop: "2rem" }}>
-                <p style={{ color: "#E8E8E8", fontSize: 15, fontStyle: "italic", lineHeight: 1.7 }}>
-                  "The return to JDM at Meta was not a step down — it was a strategic application of senior-level judgment to a different execution model, combined with system-level architecture work that draws on the full breadth of 18 years."
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -325,23 +318,6 @@ export default function Yuranium() {
               <ExperienceCard key={i} exp={exp} />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── EXECUTION SCORECARD ── */}
-      <section style={{ padding: "4rem 2rem", background: "#0A0A0A" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}>
-          <div>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: "0.2em", color: "#C9A84C", textTransform: "uppercase", marginBottom: "1rem" }}>Execution Record</p>
-            <h2 style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: "1.5rem" }}>Zero Failed Programs</h2>
-            <p style={{ color: "#A0A0A0", lineHeight: 1.8, fontSize: 16, marginBottom: "1.5rem" }}>
-              In 18 years, not a single program cancelled, descoped to non-shipment, or failed in production. This is not luck — it reflects a consistent approach to risk management, vendor selection, and schedule discipline applied across every NPI phase.
-            </p>
-            <p style={{ color: "#A0A0A0", lineHeight: 1.8, fontSize: 16 }}>
-              The scorecard captures the quantitative dimensions: 115+ products shipped, zero failures, 36+ patents, and a complexity escalation arc from phone accessories to VR headsets to flagship smartphones to smart glasses systems.
-            </p>
-          </div>
-          <img src={IMG_SCORECARD} alt="Execution Scorecard — quantitative track record across 18 years" style={{ width: "100%", borderRadius: 4 }} />
         </div>
       </section>
 
