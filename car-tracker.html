@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAR::TRACKER — Live Lexus RX 350h Monitor | yuranium.design</title>
+  <meta name="description" content="Live tracking dashboard for 2023-2024 Lexus RX 350h listings in the Bay Area. Pre-filtered search links, top 5 ranked options, market intelligence, and pre-purchase checklist." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #0d0f18;
+      --bg-deep: #070910;
+      --cyan: #00d4ff;
+      --amber: #ffb347;
+      --red: #ef4444;
+      --green: #22c55e;
+      --purple: #a78bfa;
+      --pink: #f472b6;
+      --teal: #34d399;
+      --yellow: #fbbf24;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --border: rgba(30, 41, 59, 0.5);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--slate-200);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    a { color: var(--cyan); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.8; }
+
+    /* Header */
+    .header {
+      position: sticky; top: 0; z-index: 50;
+      border-bottom: 1px solid var(--border);
+      background: rgba(7, 9, 16, 0.92);
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 12px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .back-link {
+      font-size: 9px; font-family: 'JetBrains Mono', monospace;
+      color: var(--slate-500); text-transform: uppercase; letter-spacing: 0.2em;
+    }
+    .divider { width: 1px; height: 16px; background: var(--slate-700); }
+    .title { font-size: 14px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em; }
+    .title-cyan { color: var(--cyan); }
+    .title-sep { color: var(--slate-400); }
+    .header-right { display: flex; align-items: center; gap: 8px; }
+    .subtitle { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--slate-500); }
+    .live-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 8px; border-radius: 9999px;
+      background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.3);
+    }
+    .live-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--cyan);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .live-text { font-size: 9px; font-family: 'JetBrains Mono', monospace; color: var(--cyan); }
+
+    /* Main */
+    .main { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+    .section { margin-bottom: 24px; }
+
+    /* Stat Cards */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    .stat-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px;
+    }
+    .stat-label {
+      font-size: 9px; font-family: 'JetBrains Mono', monospace;
+      color: var(--slate-500); letter-spacing: 0.15em; margin-bottom: 4px;
+    }
+    .stat-value { font-size: 18px; font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+
+    /* Strategy */
+    .strategy-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px;
+    }
+    .strategy-title {
+      font-size: 9px; font-family: 'JetBrains Mono', monospace;
+      color: var(--cyan); letter-spacing: 0.15em; margin-bottom: 12px;
+    }
+    .strategy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    @media (max-width: 768px) { .strategy-grid { grid-template-columns: 1fr; } }
+    .strategy-item { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--slate-400); line-height: 1.6; }
+    .strategy-item strong { color: var(--slate-300); display: block; margin-bottom: 4px; }
+
+    /* Search Links */
+    .search-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px;
+    }
+    .search-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .search-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 6px; border: 1px solid;
+      transition: transform 0.15s, background 0.15s;
+      font-size: 11px; font-family: 'JetBrains Mono', monospace;
+    }
+    .search-link:hover { transform: scale(1.02); }
+    .search-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .search-arrow { font-size: 9px; color: var(--slate-500); }
+
+    /* Filters */
+    .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; }
+    .filter-label {
+      font-size: 9px; font-family: 'JetBrains Mono', monospace;
+      color: var(--slate-500); letter-spacing: 0.15em; margin-right: 4px;
+    }
+    .filter-btn {
+      padding: 4px 12px; border-radius: 4px; border: 1px solid rgba(51, 65, 85, 0.5);
+      background: transparent; color: var(--slate-500); cursor: pointer;
+      font-size: 10px; font-family: 'JetBrains Mono', monospace;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover { color: var(--slate-300); border-color: var(--slate-600); }
+    .filter-btn.active {
+      background: rgba(0, 212, 255, 0.15); border-color: rgba(0, 212, 255, 0.5); color: var(--cyan);
+    }
+    .filter-count {
+      margin-left: auto;
+      font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--slate-500);
+    }
+
+    /* Table */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+    thead th {
+      text-align: left; padding: 8px; color: var(--slate-500);
+      border-bottom: 1px solid var(--border); font-weight: 500;
+      cursor: pointer; user-select: none; white-space: nowrap;
+    }
+    thead th:hover { color: var(--slate-300); }
+    thead th.right { text-align: right; }
+    tbody tr { border-bottom: 1px solid rgba(30, 41, 59, 0.3); transition: background 0.15s; }
+    tbody tr:hover { background: rgba(30, 41, 59, 0.2); }
+    tbody tr.top-row { background: rgba(0, 212, 255, 0.03); }
+    tbody tr.damage-row { background: rgba(239, 68, 68, 0.03); }
+    td { padding: 12px 8px; vertical-align: middle; }
+    td.right { text-align: right; }
+
+    /* Rank badge */
+    .rank-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px; border-radius: 50%;
+      font-size: 9px; font-weight: 700;
+    }
+    .rank-1 { background: rgba(0, 212, 255, 0.2); color: var(--cyan); box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.4); }
+    .rank-2, .rank-3 { background: rgba(255, 179, 71, 0.15); color: var(--amber); }
+    .rank-other { background: var(--slate-800); color: var(--slate-400); }
+
+    /* Trim colors */
+    .trim-luxury { color: var(--amber); font-weight: 600; }
+    .trim-plus { color: var(--cyan); }
+    .trim-base { color: var(--slate-400); }
+
+    /* Badges */
+    .badge {
+      display: inline-block; padding: 1px 6px; border-radius: 3px;
+      font-size: 8px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;
+    }
+    .badge-top { background: rgba(0, 212, 255, 0.15); color: var(--cyan); box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.3); }
+    .badge-runner { background: rgba(255, 179, 71, 0.15); color: var(--amber); }
+    .badge-value { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+    .badge-caution { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+    .badge-great { background: rgba(34, 197, 94, 0.1); color: var(--green); }
+    .badge-good { background: rgba(255, 179, 71, 0.1); color: var(--amber); }
+    .badge-fair { background: rgba(30, 41, 59, 0.5); color: var(--slate-500); }
+    .badge-new { background: rgba(167, 139, 250, 0.15); color: var(--purple); }
+    .badge-drop { background: rgba(255, 179, 71, 0.1); color: var(--amber); }
+    .badges { display: flex; flex-wrap: wrap; gap: 4px; }
+
+    /* Location */
+    .loc-main { color: var(--slate-300); }
+    .loc-sub { font-size: 9px; color: var(--slate-500); }
+
+    /* CPO / Damage */
+    .cpo-yes { color: var(--green); }
+    .cpo-no { color: var(--slate-600); }
+    .dmg-clean { color: var(--green); }
+    .dmg-yes { color: var(--red); }
+
+    /* Detail Cards */
+    .detail-section-title {
+      font-size: 9px; font-family: 'JetBrains Mono', monospace;
+      color: var(--cyan); letter-spacing: 0.15em; margin-bottom: 12px;
+    }
+    .detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    @media (max-width: 768px) { .detail-grid { grid-template-columns: 1fr; } }
+    .detail-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px;
+    }
+    .detail-card.top { border-color: rgba(0, 212, 255, 0.3); }
+    .detail-card.caution { border-color: rgba(239, 68, 68, 0.3); }
+    .detail-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .detail-title-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+    .detail-car { font-size: 14px; font-family: 'JetBrains Mono', monospace; color: var(--slate-200); }
+    .detail-dealer { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--slate-500); }
+    .detail-price { font-size: 18px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--slate-200); text-align: right; }
+    .detail-vs-carfax { font-size: 9px; font-family: 'JetBrains Mono', monospace; text-align: right; }
+    .detail-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+    .detail-stat { background: var(--bg-deep); border-radius: 4px; padding: 6px 8px; }
+    .detail-stat-label { font-size: 8px; color: var(--slate-500); letter-spacing: 0.1em; }
+    .detail-stat-value { font-size: 11px; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+    .detail-notes { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--slate-400); line-height: 1.6; margin-bottom: 8px; }
+    .detail-damage-note {
+      font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--red);
+      background: rgba(239, 68, 68, 0.05); border-radius: 4px; padding: 4px 8px; margin-bottom: 8px;
+    }
+    .detail-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .btn-carfax {
+      padding: 4px 12px; border-radius: 4px;
+      font-size: 10px; font-family: 'JetBrains Mono', monospace;
+      background: rgba(0, 212, 255, 0.1); color: var(--cyan);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      transition: background 0.15s;
+    }
+    .btn-carfax:hover { background: rgba(0, 212, 255, 0.2); }
+    .vin-tag {
+      padding: 4px 12px; border-radius: 4px;
+      font-size: 10px; font-family: 'JetBrains Mono', monospace;
+      background: rgba(30, 41, 59, 0.5); color: var(--slate-500);
+      border: 1px solid rgba(51, 65, 85, 0.3);
+    }
+
+    /* Checklist */
+    .checklist-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px;
+    }
+    .checklist-title {
+      font-size: 9px; font-family: 'JetBrains Mono', monospace;
+      color: var(--amber); letter-spacing: 0.15em; margin-bottom: 12px;
+    }
+    .checklist-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    @media (max-width: 768px) { .checklist-grid { grid-template-columns: 1fr; } }
+    .checklist-item { display: flex; gap: 8px; font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--slate-400); }
+    .checklist-box { color: var(--amber); flex-shrink: 0; }
+    .checklist-step { color: var(--slate-300); font-weight: 600; }
+    .checklist-detail { font-size: 10px; color: var(--slate-500); }
+
+    /* Footer */
+    .footer {
+      text-align: center; padding: 24px 0; margin-top: 24px;
+      border-top: 1px solid rgba(30, 41, 59, 0.3);
+    }
+    .footer-text { font-size: 9px; font-family: 'JetBrains Mono', monospace; color: var(--slate-600); }
+    .footer-sub { font-size: 9px; font-family: 'JetBrains Mono', monospace; color: var(--slate-700); margin-top: 4px; }
+
+    /* Full-width detail card for #5 */
+    .detail-card.full { grid-column: 1 / -1; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <a href="/" class="back-link">&larr; YURANIUM.DESIGN</a>
+        <div class="divider"></div>
+        <div class="title">
+          <span class="title-cyan">CAR</span><span class="title-sep">::</span><span>TRACKER</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="subtitle">2023&ndash;2024 LEXUS RX 350h</span>
+        <span class="live-badge">
+          <span class="live-dot"></span>
+          <span class="live-text">LIVE</span>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <div class="main">
+
+    <!-- Stats -->
+    <div class="section">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">TARGET DATE</div>
+          <div class="stat-value" style="color: var(--amber)">April 29, 2026</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">BUDGET RANGE</div>
+          <div class="stat-value" style="color: var(--cyan)">$48,000&ndash;$53,000</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">AVG DAYS ON MARKET</div>
+          <div class="stat-value" style="color: var(--red)">12.3 days</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">MARKET CONDITION</div>
+          <div class="stat-value" style="color: var(--red)">SELLER'S MARKET</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strategy -->
+    <div class="section">
+      <div class="strategy-card">
+        <div class="strategy-title">ACQUISITION STRATEGY</div>
+        <div class="strategy-grid">
+          <div class="strategy-item">
+            <strong>TIMING</strong>
+            Wait for 4/29 layoff clarity. If safe, buy within 1 week. If laid off, wait until Aug&ndash;Sep for seasonal dip.
+          </div>
+          <div class="strategy-item">
+            <strong>LEASE RETURN WAVE</strong>
+            2023 RX 36-month leases returning NOW through mid-2026. New CPO inventory rotating through dealers weekly &mdash; current cars will be replaced.
+          </div>
+          <div class="strategy-item">
+            <strong>NEGOTIATION TARGET</strong>
+            $50,000&ndash;$51,000 for Oakland Luxury. Use CARFAX damage flags and days-on-market as leverage. Get PPI before committing.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Links -->
+    <div class="section">
+      <div class="search-card">
+        <div class="strategy-title">LIVE SEARCH FEEDS &mdash; CLICK TO CHECK LATEST INVENTORY</div>
+        <div class="search-links">
+          <a href="https://www.carfax.com/Used-Lexus-RX-350h_t15704" target="_blank" class="search-link" style="border-color: rgba(0,212,255,0.4); background: rgba(0,212,255,0.08);">
+            <span class="search-dot" style="background: var(--cyan)"></span>
+            <span style="color: var(--cyan)">CARFAX</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+          <a href="https://www.cargurus.com/Cars/l-Used-Lexus-RX-350h-d2053" target="_blank" class="search-link" style="border-color: rgba(255,179,71,0.4); background: rgba(255,179,71,0.08);">
+            <span class="search-dot" style="background: var(--amber)"></span>
+            <span style="color: var(--amber)">CarGurus</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+          <a href="https://www.edmunds.com/lexus/rx-350h/2023/" target="_blank" class="search-link" style="border-color: rgba(167,139,250,0.4); background: rgba(167,139,250,0.08);">
+            <span class="search-dot" style="background: var(--purple)"></span>
+            <span style="color: var(--purple)">Edmunds</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+          <a href="https://www.autotrader.com/cars-for-sale/all-cars/lexus/rx-350h/dublin-ca-94568" target="_blank" class="search-link" style="border-color: rgba(244,114,182,0.4); background: rgba(244,114,182,0.08);">
+            <span class="search-dot" style="background: var(--pink)"></span>
+            <span style="color: var(--pink)">AutoTrader</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+          <a href="https://www.cars.com/shopping/results/?makes[]=lexus&models[]=lexus-rx_350h&maximum_distance=100&stock_type=used&zip=94568" target="_blank" class="search-link" style="border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.08);">
+            <span class="search-dot" style="background: var(--teal)"></span>
+            <span style="color: var(--teal)">Cars.com</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+          <a href="https://sfbay.craigslist.org/search/cta?purveyor=owner&query=lexus%20rx%20350h" target="_blank" class="search-link" style="border-color: rgba(251,191,36,0.4); background: rgba(251,191,36,0.08);">
+            <span class="search-dot" style="background: var(--yellow)"></span>
+            <span style="color: var(--yellow)">Craigslist (Private)</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="section">
+      <div class="filters" id="filters">
+        <span class="filter-label">FILTER:</span>
+        <button class="filter-btn active" data-filter="top5">TOP 5</button>
+        <button class="filter-btn" data-filter="all">ALL</button>
+        <button class="filter-btn" data-filter="cpo">CPO ONLY</button>
+        <button class="filter-btn" data-filter="nodamage">NO DAMAGE</button>
+        <button class="filter-btn" data-filter="under55k">UNDER $55K</button>
+        <span class="filter-count" id="filterCount">5 listings</span>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:32px">#</th>
+              <th data-sort="year">YEAR</th>
+              <th>TRIM</th>
+              <th class="right" data-sort="miles">MILES</th>
+              <th class="right" data-sort="price">PRICE</th>
+              <th>CPO</th>
+              <th>DAMAGE</th>
+              <th data-sort="distance">LOCATION</th>
+              <th>BADGE</th>
+              <th>LINKS</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Detail Cards -->
+    <div class="section">
+      <div class="detail-section-title">DETAILED ANALYSIS &mdash; TOP 5</div>
+      <div class="detail-grid" id="detailCards"></div>
+    </div>
+
+    <!-- Checklist -->
+    <div class="section">
+      <div class="checklist-card">
+        <div class="checklist-title">PRE-PURCHASE CHECKLIST</div>
+        <div class="checklist-grid">
+          <div class="checklist-item">
+            <span class="checklist-box">&square;</span>
+            <div>
+              <div class="checklist-step">Buy full CARFAX report</div>
+              <div class="checklist-detail">$39.99 &mdash; or demand dealer provide free. If they refuse, walk away.</div>
+            </div>
+          </div>
+          <div class="checklist-item">
+            <span class="checklist-box">&square;</span>
+            <div>
+              <div class="checklist-step">Independent PPI at Lexus mechanic</div>
+              <div class="checklist-detail">$150&ndash;$200. Non-negotiable for a $50k car from any dealer.</div>
+            </div>
+          </div>
+          <div class="checklist-item">
+            <span class="checklist-box">&square;</span>
+            <div>
+              <div class="checklist-step">Verify title is CLEAN</div>
+              <div class="checklist-detail">Ask to see actual title document. Confirm not Rebuilt, Salvage, or Flood.</div>
+            </div>
+          </div>
+          <div class="checklist-item">
+            <span class="checklist-box">&square;</span>
+            <div>
+              <div class="checklist-step">Get out-the-door price in writing</div>
+              <div class="checklist-detail">Before visiting. Watch for surprise add-ons (dealer fees, warranties, accessories).</div>
+            </div>
+          </div>
+          <div class="checklist-item">
+            <span class="checklist-box">&square;</span>
+            <div>
+              <div class="checklist-step">Check open recalls</div>
+              <div class="checklist-detail">Lexus.com/recall with VIN. March 2026 recall affects some 2023 RX models.</div>
+            </div>
+          </div>
+          <div class="checklist-item">
+            <span class="checklist-box">&square;</span>
+            <div>
+              <div class="checklist-step">Request original window sticker</div>
+              <div class="checklist-detail">Confirms exact trim, factory options, and original MSRP.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-text">DATA AS OF APRIL 12, 2026 &middot; LISTINGS CHANGE DAILY &middot; CLICK SEARCH LINKS ABOVE FOR LATEST</div>
+      <div class="footer-sub">YURANIUM.DESIGN / CAR-TRACKER</div>
+    </footer>
+  </div>
+
+  <script>
+    // ── Data ──────────────────────────────────────────────────────────
+    const LISTINGS = [
+      { id:5,rank:1,year:2023,trim:"Luxury",miles:26267,price:52809,location:"Oakland, CA",distance:15,cpo:true,damage:false,damageNote:"",oneOwner:true,serviceRecords:1,carfaxValue:56700,carfaxBadge:"GREAT VALUE",vin:"2T2BBMCA3PC009298",carfaxUrl:"https://www.carfax.com/vehicle/2T2BBMCA3PC009298",dealer:"Lexus of Oakland",notes:"Highest trim at best price. Mark Levinson audio, HUD, panoramic roof. $3,891 below CARFAX value. ~10 days on market, price dropped $92 on 04/10.",newlyListed:false,priceDrop:true,rec:"TOP PICK" },
+      { id:8,rank:2,year:2023,trim:"Premium+",miles:14182,price:54988,location:"San Jose, CA",distance:27,cpo:true,damage:false,damageNote:"",oneOwner:true,serviceRecords:4,carfaxValue:54640,carfaxBadge:"FAIR VALUE",vin:"2T2BBMCA5PC014275",carfaxUrl:"https://www.carfax.com/vehicle/2T2BBMCA5PC014275",dealer:"Lexus of San Jose",notes:"Lowest mileage 2023 on the list. 4 service records = well-maintained. CPO warranty included.",newlyListed:false,priceDrop:false,rec:"RUNNER-UP" },
+      { id:99,rank:3,year:2023,trim:"Premium+",miles:39074,price:49925,location:"Pleasanton, CA",distance:0,cpo:true,damage:false,damageNote:"",oneOwner:true,serviceRecords:null,carfaxValue:null,carfaxBadge:"",vin:"2T2BBMCA4PC007320",carfaxUrl:"https://www.carfax.com/vehicle/2T2BBMCA4PC007320",dealer:"Lexus of Pleasanton",notes:"Closest to home. Clean, CPO. Higher miles but $3k\u2013$5k cheaper than #1 and #2.",newlyListed:false,priceDrop:false,rec:"VALUE PICK" },
+      { id:12,rank:4,year:2024,trim:"Premium",miles:26724,price:54798,location:"Concord, CA",distance:19,cpo:true,damage:false,damageNote:"",oneOwner:true,serviceRecords:7,carfaxValue:53520,carfaxBadge:"FAIR VALUE",vin:"2T2BBMCAXRC036873",carfaxUrl:"https://www.carfax.com/vehicle/2T2BBMCAXRC036873",dealer:"Lexus of Concord",notes:"Newer model year. But only Premium trim (no leather, smaller 9.8\u2033 screen) at nearly same price as Oakland Luxury.",newlyListed:false,priceDrop:false,rec:"" },
+      { id:4,rank:5,year:2023,trim:"Premium+",miles:32039,price:44998,location:"Dublin, CA",distance:0,cpo:false,damage:true,damageNote:"CARFAX: Minor Damage \u2014 \u2018Other damage reported\u2019",oneOwner:true,serviceRecords:4,carfaxValue:50110,carfaxBadge:"GREAT VALUE",vin:"2T2BBMCA8PC012150",carfaxUrl:"https://www.carfax.com/vehicle/2T2BBMCA8PC012150",dealer:"Dublin Kia / Dublin Chevrolet",notes:"Cheapest but has undisclosed CARFAX damage. Non-Lexus dealer with 2.5\u2605 Yelp. 53+ days on market. Requires full CARFAX + PPI before considering.",newlyListed:false,priceDrop:true,rec:"CAUTION" },
+      { id:1,rank:null,year:2025,trim:"Premium",miles:9847,price:58479,location:"Hayward, CA",distance:9,cpo:false,damage:false,damageNote:"",oneOwner:true,serviceRecords:4,carfaxValue:57660,carfaxBadge:"FAIR VALUE",vin:"",carfaxUrl:"https://www.carfax.com/Used-Lexus-RX-350h_t15704",dealer:"Hayward Dealer",notes:"2025 model, low miles but over budget.",newlyListed:false,priceDrop:false,rec:"" },
+      { id:2,rank:null,year:2025,trim:"Premium+",miles:2125,price:59861,location:"Sunnyvale, CA",distance:25,cpo:false,damage:false,damageNote:"",oneOwner:true,serviceRecords:3,carfaxValue:61720,carfaxBadge:"GREAT VALUE",vin:"",carfaxUrl:"https://www.carfax.com/Used-Lexus-RX-350h_t15704",dealer:"Toyota Sunnyvale",notes:"Newly listed. Near-new condition but $60k.",newlyListed:true,priceDrop:false,rec:"" },
+      { id:3,rank:null,year:2024,trim:"Luxury",miles:26535,price:59990,location:"Santa Rosa, CA",distance:64,cpo:true,damage:false,damageNote:"",oneOwner:true,serviceRecords:7,carfaxValue:59420,carfaxBadge:"FAIR VALUE",vin:"",carfaxUrl:"https://www.carfax.com/Used-Lexus-RX-350h_t15704",dealer:"Lexus of Santa Rosa",notes:"CPO Luxury but far (64 mi) and $60k.",newlyListed:false,priceDrop:false,rec:"" },
+      { id:9,rank:null,year:2024,trim:"Premium+",miles:47439,price:50750,location:"Seaside, CA",distance:77,cpo:true,damage:true,damageNote:"Accident/Minor Damage",oneOwner:true,serviceRecords:13,carfaxValue:51950,carfaxBadge:"GOOD VALUE",vin:"",carfaxUrl:"https://www.carfax.com/Used-Lexus-RX-350h_t15704",dealer:"Seaside Lexus",notes:"CPO with damage history. 77 miles away. High mileage.",newlyListed:false,priceDrop:true,rec:"" },
+    ];
+
+    // ── Helpers ───────────────────────────────────────────────────────
+    const fmt = n => n.toLocaleString("en-US");
+    const fmtUsd = n => "$" + n.toLocaleString("en-US");
+
+    function trimClass(t) {
+      if (t === "Luxury") return "trim-luxury";
+      if (t === "Premium+") return "trim-plus";
+      return "trim-base";
+    }
+    function rankBadge(r) {
+      if (!r) return '<span style="color:var(--slate-600)">&mdash;</span>';
+      const cls = r === 1 ? "rank-1" : r <= 3 ? "rank-2" : "rank-other";
+      return `<span class="rank-badge ${cls}">${r}</span>`;
+    }
+    function recBadge(rec) {
+      const map = { "TOP PICK":"badge-top","RUNNER-UP":"badge-runner","VALUE PICK":"badge-value","CAUTION":"badge-caution" };
+      return rec ? `<span class="badge ${map[rec]||''}">${rec}</span>` : "";
+    }
+    function carfaxBadge(b) {
+      if (!b) return "";
+      const cls = b.includes("GREAT") ? "badge-great" : b.includes("GOOD") ? "badge-good" : "badge-fair";
+      return `<span class="badge ${cls}">${b}</span>`;
+    }
+
+    // ── State ─────────────────────────────────────────────────────────
+    let currentFilter = "top5";
+    let sortKey = "rank";
+    let sortAsc = true;
+
+    function getFiltered() {
+      let list = [...LISTINGS];
+      switch (currentFilter) {
+        case "top5": list = list.filter(l => l.rank !== null); break;
+        case "cpo": list = list.filter(l => l.cpo); break;
+        case "nodamage": list = list.filter(l => !l.damage); break;
+        case "under55k": list = list.filter(l => l.price < 55000); break;
+      }
+      list.sort((a, b) => {
+        let va, vb;
+        switch (sortKey) {
+          case "rank": va = a.rank ?? 99; vb = b.rank ?? 99; break;
+          case "price": va = a.price; vb = b.price; break;
+          case "miles": va = a.miles; vb = b.miles; break;
+          case "year": va = a.year; vb = b.year; break;
+          case "distance": va = a.distance; vb = b.distance; break;
+          default: va = 0; vb = 0;
+        }
+        return sortAsc ? va - vb : vb - va;
+      });
+      return list;
+    }
+
+    function renderTable() {
+      const list = getFiltered();
+      document.getElementById("filterCount").textContent = list.length + " listing" + (list.length !== 1 ? "s" : "");
+      const tbody = document.getElementById("tableBody");
+      tbody.innerHTML = list.map(l => {
+        const rowCls = (l.rank && l.rank <= 3) ? "top-row" : l.damage ? "damage-row" : "";
+        return `<tr class="${rowCls}">
+          <td>${rankBadge(l.rank)}</td>
+          <td>${l.year}</td>
+          <td><span class="${trimClass(l.trim)}">${l.trim}</span></td>
+          <td class="right">${fmt(l.miles)}</td>
+          <td class="right" style="font-weight:600">${fmtUsd(l.price)}</td>
+          <td>${l.cpo ? '<span class="cpo-yes">CPO \u2713</span>' : '<span class="cpo-no">&mdash;</span>'}</td>
+          <td>${l.damage ? '<span class="dmg-yes" title="'+l.damageNote+'">\u26A0 YES</span>' : '<span class="dmg-clean">CLEAN</span>'}</td>
+          <td>
+            <div class="loc-main">${l.location}</div>
+            <div class="loc-sub">${l.distance > 0 ? l.distance + " mi" : "LOCAL"} \u00B7 ${l.dealer}</div>
+          </td>
+          <td>
+            <div class="badges">
+              ${recBadge(l.rec)}
+              ${carfaxBadge(l.carfaxBadge)}
+              ${l.newlyListed ? '<span class="badge badge-new">NEW</span>' : ""}
+              ${l.priceDrop ? '<span class="badge badge-drop">PRICE DROP</span>' : ""}
+            </div>
+          </td>
+          <td><a href="${l.carfaxUrl}" target="_blank">CARFAX \u2197</a></td>
+        </tr>`;
+      }).join("");
+    }
+
+    function renderDetails() {
+      const top5 = LISTINGS.filter(l => l.rank !== null).sort((a, b) => a.rank - b.rank);
+      const container = document.getElementById("detailCards");
+      container.innerHTML = top5.map(l => {
+        const cardCls = l.rank === 1 ? "top" : l.damage ? "caution" : "";
+        const fullCls = l.rank === 5 ? " full" : "";
+        const vsCarfax = l.carfaxValue
+          ? (l.price < l.carfaxValue
+            ? `<div class="detail-vs-carfax" style="color:var(--green)">$${fmt(l.carfaxValue - l.price)} below CARFAX value</div>`
+            : `<div class="detail-vs-carfax" style="color:var(--red)">$${fmt(l.price - l.carfaxValue)} above CARFAX value</div>`)
+          : "";
+        return `<div class="detail-card ${cardCls}${fullCls}">
+          <div class="detail-header">
+            <div>
+              <div class="detail-title-row">
+                <span class="rank-badge ${l.rank===1?'rank-1':l.rank<=3?'rank-2':'rank-other'}">#${l.rank}</span>
+                <span class="detail-car">${l.year} RX 350h <span class="${trimClass(l.trim)}">${l.trim}</span></span>
+                ${recBadge(l.rec)}
+              </div>
+              <div class="detail-dealer">${l.dealer} \u00B7 ${l.location}</div>
+            </div>
+            <div>
+              <div class="detail-price">${fmtUsd(l.price)}</div>
+              ${vsCarfax}
+            </div>
+          </div>
+          <div class="detail-stats">
+            <div class="detail-stat"><div class="detail-stat-label">MILES</div><div class="detail-stat-value">${fmt(l.miles)}</div></div>
+            <div class="detail-stat"><div class="detail-stat-label">CPO</div><div class="detail-stat-value" style="color:${l.cpo?'var(--green)':'var(--red)'}">${l.cpo?'YES':'NO'}</div></div>
+            <div class="detail-stat"><div class="detail-stat-label">DAMAGE</div><div class="detail-stat-value" style="color:${l.damage?'var(--red)':'var(--green)'}">${l.damage?'YES':'CLEAN'}</div></div>
+            <div class="detail-stat"><div class="detail-stat-label">DISTANCE</div><div class="detail-stat-value">${l.distance>0?l.distance+' mi':'LOCAL'}</div></div>
+          </div>
+          <div class="detail-notes">${l.notes}</div>
+          ${l.damage && l.damageNote ? `<div class="detail-damage-note">\u26A0 ${l.damageNote}</div>` : ""}
+          <div class="detail-actions">
+            <a href="${l.carfaxUrl}" target="_blank" class="btn-carfax">View on CARFAX \u2197</a>
+            ${l.vin ? `<span class="vin-tag">VIN: ${l.vin}</span>` : ""}
+          </div>
+        </div>`;
+      }).join("");
+    }
+
+    // ── Events ────────────────────────────────────────────────────────
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFilter = btn.dataset.filter;
+        renderTable();
+      });
+    });
+
+    document.querySelectorAll("thead th[data-sort]").forEach(th => {
+      th.addEventListener("click", () => {
+        const key = th.dataset.sort;
+        if (sortKey === key) sortAsc = !sortAsc;
+        else { sortKey = key; sortAsc = true; }
+        // Update header indicators
+        document.querySelectorAll("thead th[data-sort]").forEach(h => {
+          h.textContent = h.textContent.replace(/ [▲▼]$/, "");
+        });
+        th.textContent += sortKey === key ? (sortAsc ? " ▲" : " ▼") : "";
+        renderTable();
+      });
+    });
+
+    // ── Init ──────────────────────────────────────────────────────────
+    renderTable();
+    renderDetails();
+  </script>
+</body>
+</html>
