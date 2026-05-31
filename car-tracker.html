@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAR::TRACKER — Toyota Crown Signia Top 5 | yuranium.design</title>
+  <meta name="description" content="Live tracking dashboard for Toyota Crown Signia listings in the Bay Area. Top 5 ranked options, price comparison, market intelligence, and pre-purchase checklist." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #0d0f18;
+      --bg-deep: #070910;
+      --cyan: #00d4ff;
+      --amber: #ffb347;
+      --red: #ef4444;
+      --green: #22c55e;
+      --purple: #a78bfa;
+      --pink: #f472b6;
+      --teal: #34d399;
+      --yellow: #fbbf24;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --border: rgba(30, 41, 59, 0.5);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--slate-200);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    a { color: var(--cyan); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.8; }
+
+    /* Header */
+    .header {
+      position: sticky; top: 0; z-index: 50;
+      border-bottom: 1px solid var(--border);
+      background: rgba(7, 9, 16, 0.92);
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 12px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .back-link {
+      font-size: 9px; font-family: 'JetBrains Mono', monospace;
+      color: var(--slate-500); text-transform: uppercase; letter-spacing: 0.2em;
+    }
+    .divider { width: 1px; height: 16px; background: var(--slate-700); }
+    .title { font-size: 14px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em; }
+    .title-cyan { color: var(--cyan); }
+    .title-sep { color: var(--slate-400); }
+    .header-right { display: flex; align-items: center; gap: 8px; }
+    .subtitle { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--slate-500); }
+    .live-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 8px; border-radius: 9999px;
+      background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.3);
+    }
+    .live-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--cyan);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .live-text { font-size: 9px; font-family: 'JetBrains Mono', monospace; color: var(--cyan); }
+
+    /* Main */
+    .main { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+    .section { margin-bottom: 24px; }
+
+    /* Stat Cards */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    .stat-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px;
+    }
+    .stat-label {
+      font-size: 9px; font-family: 'JetBrains Mono', monospace;
+      color: var(--slate-500); letter-spacing: 0.15em; margin-bottom: 4px;
+    }
+    .stat-value { font-size: 18px; font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+
+    /* Strategy */
+    .strategy-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px;
+    }
+    .strategy-title {
+      font-size: 9px; font-family: 'JetBrains Mono', monospace;
+      color: var(--cyan); letter-spacing: 0.15em; margin-bottom: 12px;
+    }
+    .strategy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    @media (max-width: 768px) { .strategy-grid { grid-template-columns: 1fr; } }
+    .strategy-item { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--slate-400); line-height: 1.6; }
+    .strategy-item strong { color: var(--slate-300); display: block; margin-bottom: 4px; }
+
+    /* Search Links */
+    .search-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px;
+    }
+    .search-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .search-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 6px; border: 1px solid;
+      transition: transform 0.15s, background 0.15s;
+      font-size: 11px; font-family: 'JetBrains Mono', monospace;
+    }
+    .search-link:hover { transform: scale(1.02); }
+    .search-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .search-arrow { font-size: 9px; color: var(--slate-500); }
+
+    /* Filters */
+    .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; }
+    .filter-label {
+      font-size: 9px; font-family: 'JetBrains Mono', monospace;
+      color: var(--slate-500); letter-spacing: 0.15em; margin-right: 4px;
+    }
+    .filter-btn {
+      padding: 4px 12px; border-radius: 4px; border: 1px solid rgba(51, 65, 85, 0.5);
+      background: transparent; color: var(--slate-500); cursor: pointer;
+      font-size: 10px; font-family: 'JetBrains Mono', monospace;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover { color: var(--slate-300); border-color: var(--slate-600); }
+    .filter-btn.active {
+      background: rgba(0, 212, 255, 0.15); border-color: rgba(0, 212, 255, 0.5); color: var(--cyan);
+    }
+    .filter-count {
+      margin-left: auto;
+      font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--slate-500);
+    }
+
+    /* Table */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+    thead th {
+      text-align: left; padding: 8px; color: var(--slate-500);
+      border-bottom: 1px solid var(--border); font-weight: 500;
+      cursor: pointer; user-select: none; white-space: nowrap;
+    }
+    thead th:hover { color: var(--slate-300); }
+    thead th.right { text-align: right; }
+    tbody tr { border-bottom: 1px solid rgba(30, 41, 59, 0.3); transition: background 0.15s; }
+    tbody tr:hover { background: rgba(30, 41, 59, 0.2); }
+    tbody tr.top-row { background: rgba(0, 212, 255, 0.03); }
+    tbody tr.damage-row { background: rgba(239, 68, 68, 0.03); }
+    td { padding: 12px 8px; vertical-align: middle; }
+    td.right { text-align: right; }
+
+    /* Rank badge */
+    .rank-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px; border-radius: 50%;
+      font-size: 9px; font-weight: 700;
+    }
+    .rank-1 { background: rgba(0, 212, 255, 0.2); color: var(--cyan); box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.4); }
+    .rank-2, .rank-3 { background: rgba(255, 179, 71, 0.15); color: var(--amber); }
+    .rank-other { background: var(--slate-800); color: var(--slate-400); }
+
+    /* Trim colors */
+    .trim-luxury { color: var(--amber); font-weight: 600; }
+    .trim-plus { color: var(--cyan); }
+    .trim-base { color: var(--slate-400); }
+
+    /* Badges */
+    .badge {
+      display: inline-block; padding: 1px 6px; border-radius: 3px;
+      font-size: 8px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;
+    }
+    .badge-top { background: rgba(0, 212, 255, 0.15); color: var(--cyan); box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.3); }
+    .badge-runner { background: rgba(255, 179, 71, 0.15); color: var(--amber); }
+    .badge-value { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+    .badge-caution { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+    .badge-great { background: rgba(34, 197, 94, 0.1); color: var(--green); }
+    .badge-good { background: rgba(255, 179, 71, 0.1); color: var(--amber); }
+    .badge-fair { background: rgba(30, 41, 59, 0.5); color: var(--slate-500); }
+    .badge-new { background: rgba(167, 139, 250, 0.15); color: var(--purple); }
+    .badge-drop { background: rgba(255, 179, 71, 0.1); color: var(--amber); }
+    .badges { display: flex; flex-wrap: wrap; gap: 4px; }
+
+    /* Location */
+    .loc-main { color: var(--slate-300); }
+    .loc-sub { font-size: 9px; color: var(--slate-500); }
+
+    /* CPO / Damage */
+    .cpo-yes { color: var(--green); }
+    .cpo-no { color: var(--slate-600); }
+    .dmg-clean { color: var(--green); }
+    .dmg-yes { color: var(--red); }
+
+    /* Detail Cards */
+    .detail-section-title {
+      font-size: 9px; font-family: 'JetBrains Mono', monospace;
+      color: var(--cyan); letter-spacing: 0.15em; margin-bottom: 12px;
+    }
+    .detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    @media (max-width: 768px) { .detail-grid { grid-template-columns: 1fr; } }
+    .detail-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px;
+    }
+    .detail-card.top { border-color: rgba(0, 212, 255, 0.3); }
+    .detail-card.caution { border-color: rgba(239, 68, 68, 0.3); }
+    .detail-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .detail-title-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+    .detail-car { font-size: 14px; font-family: 'JetBrains Mono', monospace; color: var(--slate-200); }
+    .detail-dealer { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--slate-500); }
+    .detail-price { font-size: 18px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--slate-200); text-align: right; }
+    .detail-vs-carfax { font-size: 9px; font-family: 'JetBrains Mono', monospace; text-align: right; }
+    .detail-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+    .detail-stat { background: var(--bg-deep); border-radius: 4px; padding: 6px 8px; }
+    .detail-stat-label { font-size: 8px; color: var(--slate-500); letter-spacing: 0.1em; }
+    .detail-stat-value { font-size: 11px; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+    .detail-notes { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--slate-400); line-height: 1.6; margin-bottom: 8px; }
+    .detail-damage-note {
+      font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--red);
+      background: rgba(239, 68, 68, 0.05); border-radius: 4px; padding: 4px 8px; margin-bottom: 8px;
+    }
+    .detail-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .btn-carfax {
+      padding: 4px 12px; border-radius: 4px;
+      font-size: 10px; font-family: 'JetBrains Mono', monospace;
+      background: rgba(0, 212, 255, 0.1); color: var(--cyan);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      transition: background 0.15s;
+    }
+    .btn-carfax:hover { background: rgba(0, 212, 255, 0.2); }
+    .vin-tag {
+      padding: 4px 12px; border-radius: 4px;
+      font-size: 10px; font-family: 'JetBrains Mono', monospace;
+      background: rgba(30, 41, 59, 0.5); color: var(--slate-500);
+      border: 1px solid rgba(51, 65, 85, 0.3);
+    }
+
+    /* Checklist */
+    .checklist-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px;
+    }
+    .checklist-title {
+      font-size: 9px; font-family: 'JetBrains Mono', monospace;
+      color: var(--amber); letter-spacing: 0.15em; margin-bottom: 12px;
+    }
+    .checklist-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    @media (max-width: 768px) { .checklist-grid { grid-template-columns: 1fr; } }
+    .checklist-item { display: flex; gap: 8px; font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--slate-400); }
+    .checklist-box { color: var(--amber); flex-shrink: 0; }
+    .checklist-step { color: var(--slate-300); font-weight: 600; }
+    .checklist-detail { font-size: 10px; color: var(--slate-500); }
+
+    /* Footer */
+    .footer {
+      text-align: center; padding: 24px 0; margin-top: 24px;
+      border-top: 1px solid rgba(30, 41, 59, 0.3);
+    }
+    .footer-text { font-size: 9px; font-family: 'JetBrains Mono', monospace; color: var(--slate-600); }
+    .footer-sub { font-size: 9px; font-family: 'JetBrains Mono', monospace; color: var(--slate-700); margin-top: 4px; }
+
+    /* Full-width detail card for #5 */
+    .detail-card.full { grid-column: 1 / -1; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <a href="/" class="back-link">&larr; YURANIUM.DESIGN</a>
+        <div class="divider"></div>
+        <div class="title">
+          <span class="title-cyan">CAR</span><span class="title-sep">::</span><span>TRACKER</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="subtitle">CROWN SIGNIA FOCUS</span>
+        <span class="live-badge">
+          <span class="live-dot"></span>
+          <span class="live-text">LIVE</span>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <div class="main">
+
+    <!-- Stats -->
+    <div class="section">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">TARGET</div>
+          <div class="stat-value" style="color: var(--amber)">BUY THIS WEEK</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">BUDGET RANGE</div>
+          <div class="stat-value" style="color: var(--cyan)">$38,000&ndash;$48,000</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">CROWN SIGNIA INVENTORY</div>
+          <div class="stat-value" style="color: var(--green)">9 TRACKED</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">PRICES TRENDING</div>
+          <div class="stat-value" style="color: var(--green)">DOWN &darr;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strategy -->
+    <div class="section">
+      <div class="strategy-card">
+        <div class="strategy-title">ACQUISITION STRATEGY &mdash; CROWN SIGNIA</div>
+        <div class="strategy-grid">
+          <div class="strategy-item">
+            <strong>WHY CROWN SIGNIA</strong>
+            Same 2.5L hybrid powertrain as RX 350h. Better fuel economy (38 vs 36 MPG). Lower depreciation (30% vs 41% over 5 yr). ~$12k lower 5-year total cost of ownership. Prices are softening with growing inventory.
+          </div>
+          <div class="strategy-item">
+            <strong>PRICE MOVEMENT (APR 19 &rarr; MAY 2)</strong>
+            Prices continuing to drop: Santa Rosa Limited &minus;$2,000 (from $46,998), Kearny Mesa Limited &minus;$1,000, Carvana Limited &minus;$400. 4 more listings SOLD since Apr 24 (Sacramento XLE, Folsom XLE, Pleasanton XLE, SF XLE). New CPO Limited found in Carlsbad at $43,991 &mdash; best Limited deal in CA.
+          </div>
+          <div class="strategy-item">
+            <strong>TOP TARGETS</strong>
+            #1 San Rafael CPO XLE at $39,992 &mdash; best overall value, CARFAX Great Value. Target $38&ndash;39k. #2 Carlsbad CPO Limited at $43,991 &mdash; near-new 1,275 mi, $5,791 below market. Worth the 350 mi trip. #3 San Jose Limited CPO at $47,988 &mdash; closest at 9 mi, negotiate to $44&ndash;45k.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Links -->
+    <div class="section">
+      <div class="search-card">
+        <div class="strategy-title">LIVE SEARCH FEEDS &mdash; LEXUS RX 350h</div>
+        <div class="search-links">
+          <a href="https://www.carfax.com/Used-Lexus-RX-350h_t15704" target="_blank" class="search-link" style="border-color: rgba(0,212,255,0.4); background: rgba(0,212,255,0.08);">
+            <span class="search-dot" style="background: var(--cyan)"></span>
+            <span style="color: var(--cyan)">CARFAX</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+          <a href="https://www.cargurus.com/Cars/l-Used-Lexus-RX-350h-d2053" target="_blank" class="search-link" style="border-color: rgba(255,179,71,0.4); background: rgba(255,179,71,0.08);">
+            <span class="search-dot" style="background: var(--amber)"></span>
+            <span style="color: var(--amber)">CarGurus</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+          <a href="https://www.edmunds.com/lexus/rx-350h/2023/" target="_blank" class="search-link" style="border-color: rgba(167,139,250,0.4); background: rgba(167,139,250,0.08);">
+            <span class="search-dot" style="background: var(--purple)"></span>
+            <span style="color: var(--purple)">Edmunds</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+          <a href="https://www.autotrader.com/cars-for-sale/all-cars/lexus/rx-350h/dublin-ca-94568" target="_blank" class="search-link" style="border-color: rgba(244,114,182,0.4); background: rgba(244,114,182,0.08);">
+            <span class="search-dot" style="background: var(--pink)"></span>
+            <span style="color: var(--pink)">AutoTrader</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+          <a href="https://www.cars.com/shopping/results/?makes[]=lexus&models[]=lexus-rx_350h&maximum_distance=100&stock_type=used&zip=94568" target="_blank" class="search-link" style="border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.08);">
+            <span class="search-dot" style="background: var(--teal)"></span>
+            <span style="color: var(--teal)">Cars.com</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+          <a href="https://sfbay.craigslist.org/search/cta?purveyor=owner&query=lexus%20rx%20350h" target="_blank" class="search-link" style="border-color: rgba(251,191,36,0.4); background: rgba(251,191,36,0.08);">
+            <span class="search-dot" style="background: var(--yellow)"></span>
+            <span style="color: var(--yellow)">Craigslist (Private)</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+        </div>
+        <div class="strategy-title" style="margin-top: 16px;">LIVE SEARCH FEEDS &mdash; TOYOTA CROWN SIGNIA</div>
+        <div class="search-links">
+          <a href="https://www.carfax.com/Used-Toyota-Crown-Signia_w10781" target="_blank" class="search-link" style="border-color: rgba(0,212,255,0.4); background: rgba(0,212,255,0.08);">
+            <span class="search-dot" style="background: var(--cyan)"></span>
+            <span style="color: var(--cyan)">CARFAX</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+          <a href="https://www.cargurus.com/Cars/l-Used-2025-Toyota-Crown-Signia-c33252" target="_blank" class="search-link" style="border-color: rgba(255,179,71,0.4); background: rgba(255,179,71,0.08);">
+            <span class="search-dot" style="background: var(--amber)"></span>
+            <span style="color: var(--amber)">CarGurus</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+          <a href="https://www.edmunds.com/used-toyota-crown-signia-san-francisco-ca/" target="_blank" class="search-link" style="border-color: rgba(167,139,250,0.4); background: rgba(167,139,250,0.08);">
+            <span class="search-dot" style="background: var(--purple)"></span>
+            <span style="color: var(--purple)">Edmunds</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+          <a href="https://www.autotrader.com/cars-for-sale/toyota/crown-signia/dublin-ca-94568" target="_blank" class="search-link" style="border-color: rgba(244,114,182,0.4); background: rgba(244,114,182,0.08);">
+            <span class="search-dot" style="background: var(--pink)"></span>
+            <span style="color: var(--pink)">AutoTrader</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+          <a href="https://www.cars.com/shopping/results/?makes[]=toyota&models[]=toyota-crown_signia&maximum_distance=100&stock_type=used&zip=94568" target="_blank" class="search-link" style="border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.08);">
+            <span class="search-dot" style="background: var(--teal)"></span>
+            <span style="color: var(--teal)">Cars.com</span>
+            <span class="search-arrow">&nearr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="section">
+      <div class="filters" id="filters">
+        <span class="filter-label">FILTER:</span>
+        <button class="filter-btn active" data-filter="top5">TOP 5</button>
+        <button class="filter-btn" data-filter="all">ALL</button>
+        <button class="filter-btn" data-filter="cpo">CPO ONLY</button>
+        <button class="filter-btn" data-filter="nodamage">NO DAMAGE</button>
+        <button class="filter-btn" data-filter="under55k">UNDER $45K</button>
+        <button class="filter-btn" data-filter="rx">RX 350h ONLY</button>
+        <button class="filter-btn" data-filter="signia">CROWN SIGNIA ONLY</button>
+        <span class="filter-count" id="filterCount">5 listings</span>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:32px">#</th>
+              <th data-sort="year">YEAR</th>
+              <th>MODEL</th>
+              <th>TRIM</th>
+              <th class="right" data-sort="miles">MILES</th>
+              <th class="right" data-sort="price">PRICE</th>
+              <th>CPO</th>
+              <th>DAMAGE</th>
+              <th data-sort="distance">LOCATION</th>
+              <th>BADGE</th>
+              <th>LINKS</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Detail Cards -->
+    <div class="section">
+      <div class="detail-section-title">DETAILED ANALYSIS &mdash; TOP 5 CROWN SIGNIA (MAY 2)</div>
+      <div class="detail-grid" id="detailCards"></div>
+    </div>
+
+    <!-- Checklist -->
+    <div class="section">
+      <div class="checklist-card">
+        <div class="checklist-title">PRE-PURCHASE CHECKLIST</div>
+        <div class="checklist-grid">
+          <div class="checklist-item">
+            <span class="checklist-box">&square;</span>
+            <div>
+              <div class="checklist-step">Buy full CARFAX report</div>
+              <div class="checklist-detail">$39.99 &mdash; or demand dealer provide free. If they refuse, walk away.</div>
+            </div>
+          </div>
+          <div class="checklist-item">
+            <span class="checklist-box">&square;</span>
+            <div>
+              <div class="checklist-step">Independent PPI at Toyota mechanic</div>
+              <div class="checklist-detail">$150&ndash;$200. Non-negotiable for a $40&ndash;48k car from any dealer.</div>
+            </div>
+          </div>
+          <div class="checklist-item">
+            <span class="checklist-box">&square;</span>
+            <div>
+              <div class="checklist-step">Verify title is CLEAN</div>
+              <div class="checklist-detail">Ask to see actual title document. Confirm not Rebuilt, Salvage, or Flood.</div>
+            </div>
+          </div>
+          <div class="checklist-item">
+            <span class="checklist-box">&square;</span>
+            <div>
+              <div class="checklist-step">Get out-the-door price in writing</div>
+              <div class="checklist-detail">Before visiting. Watch for surprise add-ons (dealer fees, warranties, accessories).</div>
+            </div>
+          </div>
+          <div class="checklist-item">
+            <span class="checklist-box">&square;</span>
+            <div>
+              <div class="checklist-step">Check open recalls</div>
+              <div class="checklist-detail">Toyota.com/recall with VIN. Verify no open safety recalls on Crown Signia.</div>
+            </div>
+          </div>
+          <div class="checklist-item">
+            <span class="checklist-box">&square;</span>
+            <div>
+              <div class="checklist-step">Request original window sticker</div>
+              <div class="checklist-detail">Confirms exact trim, factory options, and original MSRP.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-text">DATA AS OF MAY 2, 2026 &middot; LISTINGS CHANGE DAILY &middot; CLICK SEARCH LINKS ABOVE FOR LATEST</div>
+      <div class="footer-sub">YURANIUM.DESIGN / CAR-TRACKER</div>
+    </footer>
+  </div>
+
+  <script>
+    // ── Data ──────────────────────────────────────────────────────────
+    const LISTINGS = [
+      // ── Crown Signia Listings (TOP 5 RANKED) ── Updated May 2, 2026
+      { id:201,rank:1,year:2025,trim:"XLE",model:"Crown Signia",miles:7904,price:39992,location:"San Rafael, CA",distance:56,cpo:true,damage:false,damageNote:"",oneOwner:true,serviceRecords:0,carfaxValue:42110,carfaxBadge:"GREAT VALUE",vin:"JTDACAAJ6S3020764",carfaxUrl:"https://www.edmunds.com/used-toyota-crown-signia-san-jose-ca/",dealer:"Toyota Marin",notes:"#1 TOP PICK: CPO XLE, 7,904 mi. CARFAX Great Value \u2014 $2,118 below market. CPO certified. 56 mi away. Best overall value. Target $38\u201339k.",newlyListed:false,priceDrop:false,rec:"TOP PICK" },
+      { id:214,rank:2,year:2025,trim:"Limited",model:"Crown Signia",miles:1275,price:43991,location:"Carlsbad, CA",distance:350,cpo:true,damage:false,damageNote:"",oneOwner:true,serviceRecords:0,carfaxValue:49782,carfaxBadge:"GREAT VALUE",vin:"JTDACAAJ2S3014251",carfaxUrl:"https://www.edmunds.com/used-certified-pre-owned-toyota-crown-signia/",dealer:"Toyota Carlsbad",notes:"#2 RUNNER-UP: CPO Limited at only 1,275 mi \u2014 essentially new! $5,791 below market on Edmunds. JBL audio, pano roof, ventilated seats. 350 mi away but worth the trip for $4k less than SJ Limited.",newlyListed:true,priceDrop:false,rec:"RUNNER-UP" },
+      { id:205,rank:3,year:2025,trim:"Limited",model:"Crown Signia",miles:12278,price:47988,location:"San Jose, CA",distance:9,cpo:true,damage:false,damageNote:"",oneOwner:true,serviceRecords:6,carfaxValue:47090,carfaxBadge:"GOOD VALUE",vin:"JTDACAAJ7S3018506",carfaxUrl:"https://www.edmunds.com/used-toyota-crown-signia-san-jose-ca/",dealer:"Stevens Creek Toyota",notes:"#3: Limited CPO, closest at only 9 mi. One-owner, 6 service records. JBL audio, panoramic roof, ventilated seats. Best if you want top trim + convenience. Target $44\u201345k.",newlyListed:false,priceDrop:false,rec:"" },
+      { id:209,rank:4,year:2025,trim:"Limited",model:"Crown Signia",miles:9311,price:44998,location:"Santa Rosa, CA",distance:87,cpo:false,damage:false,damageNote:"",oneOwner:true,serviceRecords:0,carfaxValue:null,carfaxBadge:"",vin:"JTDACAAJ6S3011434",carfaxUrl:"https://www.edmunds.com/used-toyota-crown-signia-san-jose-ca/",dealer:"CarMax Santa Rosa",notes:"#4: Limited at $44,998 (price dropped $2,000 from $46,998 since Apr 19). Clean, accident-free. 87 mi away. No CPO but CarMax warranty included.",newlyListed:false,priceDrop:true,rec:"VALUE PICK" },
+      { id:215,rank:5,year:2025,trim:"Limited",model:"Crown Signia",miles:6000,price:48998,location:"Kearny Mesa, CA",distance:450,cpo:false,damage:false,damageNote:"",oneOwner:true,serviceRecords:0,carfaxValue:null,carfaxBadge:"",vin:"",carfaxUrl:"https://www.carmax.com/cars/toyota/crown-signia",dealer:"CarMax Kearny Mesa",notes:"#5: Limited at $48,998 (was $49,998 \u2014 price dropped $1,000). Low miles. $149 shipping to Bay Area. Clean history.",newlyListed:false,priceDrop:true,rec:"" },
+      // ── Crown Signia Additional Listings ──
+      { id:207,rank:null,year:2025,trim:"Limited",model:"Crown Signia",miles:null,price:42798,location:"Dublin, CA",distance:23,cpo:false,damage:false,damageNote:"",oneOwner:true,serviceRecords:0,carfaxValue:null,carfaxBadge:"",vin:"JTDACAAJ6S3008808",carfaxUrl:"https://www.edmunds.com/used-toyota-crown-signia-san-jose-ca/",dealer:"Dublin Dealer",notes:"Limited trim at $42,798. One owner, non-smoker. Mileage not disclosed \u2014 verify before visiting. 23 mi away.",newlyListed:false,priceDrop:false,rec:"",model:"Crown Signia" },
+      { id:208,rank:null,year:2025,trim:"Limited",model:"Crown Signia",miles:75640,price:39998,location:"Fremont, CA",distance:12,cpo:false,damage:false,damageNote:"",oneOwner:false,serviceRecords:0,carfaxValue:null,carfaxBadge:"",vin:"JTDACAAJ0S3009680",carfaxUrl:"https://www.edmunds.com/used-toyota-crown-signia-san-jose-ca/",dealer:"CarMax Fremont",notes:"CAUTION: 75,640 miles on a 2025 \u2014 likely fleet/rental. No history available. Cheapest Limited but high risk. 12 mi away.",newlyListed:false,priceDrop:false,rec:"CAUTION",model:"Crown Signia" },
+      { id:210,rank:null,year:2025,trim:"Limited",model:"Crown Signia",miles:9232,price:45992,location:"Santa Rosa, CA",distance:87,cpo:false,damage:false,damageNote:"",oneOwner:true,serviceRecords:0,carfaxValue:null,carfaxBadge:"",vin:"JTDACAAJ6S3014348",carfaxUrl:"https://www.edmunds.com/used-toyota-crown-signia-san-jose-ca/",dealer:"Santa Rosa Dealer",notes:"Limited at $45,992 (price dropped $600 from $46,592). Clean, accident-free. 87 mi away.",newlyListed:false,priceDrop:true,rec:"",model:"Crown Signia" },
+      { id:213,rank:null,year:2025,trim:"Limited",model:"Crown Signia",miles:1076,price:49590,location:"Sacramento, CA",distance:78,cpo:false,damage:false,damageNote:"",oneOwner:true,serviceRecords:0,carfaxValue:null,carfaxBadge:"",vin:"JTDACAAJ4S3022349",carfaxUrl:"https://www.edmunds.com/used-toyota-crown-signia-san-jose-ca/",dealer:"Carvana Sacramento",notes:"Near-new Limited, only 1,076 mi. Price dropped $400 from $49,990. Over budget at $49.5k. 78 mi away.",newlyListed:false,priceDrop:true,rec:"",model:"Crown Signia" },
+      // ── RX 350h Listings (reference, unranked) ──
+      { id:301,rank:null,year:2023,trim:"Luxury",model:"RX 350h",miles:53000,price:47998,location:"Fremont, CA",distance:12,cpo:false,damage:false,damageNote:"",oneOwner:true,serviceRecords:0,carfaxValue:null,carfaxBadge:"",vin:"",carfaxUrl:"https://www.carmax.com/cars/lexus/rx-350h",dealer:"CarMax Fremont",notes:"RX 350h reference: Luxury trim at $47,998 (price dropped $1,000 from $48,998). 53k mi. Local at 12 mi. Test drive today.",newlyListed:false,priceDrop:true,rec:"" },
+      { id:302,rank:null,year:2025,trim:"Premium",model:"RX 350h",miles:1000,price:59998,location:"Serramonte, CA",distance:25,cpo:false,damage:false,damageNote:"",oneOwner:true,serviceRecords:0,carfaxValue:null,carfaxBadge:"",vin:"",carfaxUrl:"https://www.carmax.com/cars/lexus/rx-350h",dealer:"CarMax Serramonte",notes:"RX 350h reference: Near-new 2025 Premium, only 1k mi. Over budget at $60k.",newlyListed:true,priceDrop:false,rec:"" },
+      { id:303,rank:null,year:2024,trim:"Premium+",model:"RX 350h",miles:25000,price:53998,location:"Spokane, WA",distance:800,cpo:false,damage:false,damageNote:"",oneOwner:true,serviceRecords:0,carfaxValue:null,carfaxBadge:"",vin:"",carfaxUrl:"https://www.carmax.com/cars/lexus/rx-350h",dealer:"CarMax Spokane",notes:"RX 350h reference: 2024 Premium+ at $53,998 (was $54,998). $899 shipping. Decent deal if set on RX.",newlyListed:false,priceDrop:true,rec:"" },
+    ];
+
+    // ── Helpers ───────────────────────────────────────────────────────
+    const fmt = n => n.toLocaleString("en-US");
+    const fmtUsd = n => "$" + n.toLocaleString("en-US");
+
+    function trimClass(t) {
+      if (t === "Luxury" || t === "Limited") return "trim-luxury";
+      if (t === "Premium+") return "trim-plus";
+      return "trim-base";
+    }
+    function rankBadge(r) {
+      if (!r) return '<span style="color:var(--slate-600)">&mdash;</span>';
+      const cls = r === 1 ? "rank-1" : r <= 3 ? "rank-2" : "rank-other";
+      return `<span class="rank-badge ${cls}">${r}</span>`;
+    }
+    function recBadge(rec) {
+      const map = { "TOP PICK":"badge-top","RUNNER-UP":"badge-runner","VALUE PICK":"badge-value","CAUTION":"badge-caution" };
+      return rec ? `<span class="badge ${map[rec]||''}">${rec}</span>` : "";
+    }
+    function carfaxBadge(b) {
+      if (!b) return "";
+      const cls = b.includes("GREAT") ? "badge-great" : b.includes("GOOD") ? "badge-good" : "badge-fair";
+      return `<span class="badge ${cls}">${b}</span>`;
+    }
+
+    // ── State ─────────────────────────────────────────────────────────
+    let currentFilter = "top5";
+    let sortKey = "rank";
+    let sortAsc = true;
+
+    function getFiltered() {
+      let list = [...LISTINGS];
+      switch (currentFilter) {
+        case "top5": list = list.filter(l => l.rank !== null); break;
+        case "cpo": list = list.filter(l => l.cpo); break;
+        case "nodamage": list = list.filter(l => !l.damage); break;
+        case "under55k": list = list.filter(l => l.price < 45000); break;
+        case "rx": list = list.filter(l => l.model === "RX 350h"); break;
+        case "signia": list = list.filter(l => l.model === "Crown Signia"); break;
+      }
+      list.sort((a, b) => {
+        let va, vb;
+        switch (sortKey) {
+          case "rank": va = a.rank ?? 99; vb = b.rank ?? 99; break;
+          case "price": va = a.price; vb = b.price; break;
+          case "miles": va = a.miles; vb = b.miles; break;
+          case "year": va = a.year; vb = b.year; break;
+          case "distance": va = a.distance; vb = b.distance; break;
+          default: va = 0; vb = 0;
+        }
+        return sortAsc ? va - vb : vb - va;
+      });
+      return list;
+    }
+
+    function renderTable() {
+      const list = getFiltered();
+      document.getElementById("filterCount").textContent = list.length + " listing" + (list.length !== 1 ? "s" : "");
+      const tbody = document.getElementById("tableBody");
+      tbody.innerHTML = list.map(l => {
+        const rowCls = (l.rank && l.rank <= 3) ? "top-row" : l.damage ? "damage-row" : "";
+        return `<tr class="${rowCls}">
+          <td>${rankBadge(l.rank)}</td>
+          <td>${l.year}</td>
+          <td><span style="color:${l.model==='Crown Signia'?'var(--teal)':'var(--purple)'}; font-weight:600; font-size:9px;">${l.model}</span></td>
+          <td><span class="${trimClass(l.trim)}">${l.trim}</span></td>
+          <td class="right">${l.miles ? fmt(l.miles) : 'N/A'}</td>
+          <td class="right" style="font-weight:600">${fmtUsd(l.price)}</td>
+          <td>${l.cpo ? '<span class="cpo-yes">CPO \u2713</span>' : '<span class="cpo-no">&mdash;</span>'}</td>
+          <td>${l.damage ? '<span class="dmg-yes" title="'+l.damageNote+'">\u26A0 YES</span>' : '<span class="dmg-clean">CLEAN</span>'}</td>
+          <td>
+            <div class="loc-main">${l.location}</div>
+            <div class="loc-sub">${l.distance > 0 ? l.distance + " mi" : "LOCAL"} \u00B7 ${l.dealer}</div>
+          </td>
+          <td>
+            <div class="badges">
+              ${recBadge(l.rec)}
+              ${carfaxBadge(l.carfaxBadge)}
+              ${l.newlyListed ? '<span class="badge badge-new">NEW</span>' : ""}
+              ${l.priceDrop ? '<span class="badge badge-drop">PRICE DROP</span>' : ""}
+            </div>
+          </td>
+          <td><a href="${l.carfaxUrl}" target="_blank">${l.model==='Crown Signia'?'Edmunds':'CARFAX'} \u2197</a></td>
+        </tr>`;
+      }).join("");
+    }
+
+    function renderDetails() {
+      const top5 = LISTINGS.filter(l => l.rank !== null).sort((a, b) => a.rank - b.rank);
+      const container = document.getElementById("detailCards");
+      container.innerHTML = top5.map(l => {
+        const cardCls = l.rank === 1 ? "top" : l.damage ? "caution" : "";
+        const fullCls = l.rank === 5 ? " full" : "";
+        const vsCarfax = l.carfaxValue
+          ? (l.price < l.carfaxValue
+            ? `<div class="detail-vs-carfax" style="color:var(--green)">$${fmt(l.carfaxValue - l.price)} below CARFAX value</div>`
+            : `<div class="detail-vs-carfax" style="color:var(--red)">$${fmt(l.price - l.carfaxValue)} above CARFAX value</div>`)
+          : "";
+        return `<div class="detail-card ${cardCls}${fullCls}">
+          <div class="detail-header">
+            <div>
+              <div class="detail-title-row">
+                <span class="rank-badge ${l.rank===1?'rank-1':l.rank<=3?'rank-2':'rank-other'}">#${l.rank}</span>
+                <span class="detail-car">${l.year} ${l.model} <span class="${trimClass(l.trim)}">${l.trim}</span></span>
+                ${recBadge(l.rec)}
+              </div>
+              <div class="detail-dealer">${l.dealer} \u00B7 ${l.location}</div>
+            </div>
+            <div>
+              <div class="detail-price">${fmtUsd(l.price)}</div>
+              ${vsCarfax}
+            </div>
+          </div>
+          <div class="detail-stats">
+            <div class="detail-stat"><div class="detail-stat-label">MILES</div><div class="detail-stat-value">${l.miles ? fmt(l.miles) : 'N/A'}</div></div>
+            <div class="detail-stat"><div class="detail-stat-label">CPO</div><div class="detail-stat-value" style="color:${l.cpo?'var(--green)':'var(--red)'}">${l.cpo?'YES':'NO'}</div></div>
+            <div class="detail-stat"><div class="detail-stat-label">DAMAGE</div><div class="detail-stat-value" style="color:${l.damage?'var(--red)':'var(--green)'}">${l.damage?'YES':'CLEAN'}</div></div>
+            <div class="detail-stat"><div class="detail-stat-label">DISTANCE</div><div class="detail-stat-value">${l.distance>0?l.distance+' mi':'LOCAL'}</div></div>
+          </div>
+          <div class="detail-notes">${l.notes}</div>
+          ${l.damage && l.damageNote ? `<div class="detail-damage-note">\u26A0 ${l.damageNote}</div>` : ""}
+          <div class="detail-actions">
+            <a href="${l.carfaxUrl}" target="_blank" class="btn-carfax">View on ${l.model==='Crown Signia'?'Edmunds':'CARFAX'} \u2197</a>
+            ${l.vin ? `<span class="vin-tag">VIN: ${l.vin}</span>` : ""}
+          </div>
+        </div>`;
+      }).join("");
+    }
+
+    // ── Events ────────────────────────────────────────────────────────
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFilter = btn.dataset.filter;
+        renderTable();
+      });
+    });
+
+    document.querySelectorAll("thead th[data-sort]").forEach(th => {
+      th.addEventListener("click", () => {
+        const key = th.dataset.sort;
+        if (sortKey === key) sortAsc = !sortAsc;
+        else { sortKey = key; sortAsc = true; }
+        // Update header indicators
+        document.querySelectorAll("thead th[data-sort]").forEach(h => {
+          h.textContent = h.textContent.replace(/ [▲▼]$/, "");
+        });
+        th.textContent += sortKey === key ? (sortAsc ? " ▲" : " ▼") : "";
+        renderTable();
+      });
+    });
+
+    // ── Init ──────────────────────────────────────────────────────────
+    renderTable();
+    renderDetails();
+  </script>
+</body>
+</html>
