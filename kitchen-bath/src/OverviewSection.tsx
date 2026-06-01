@@ -14,6 +14,8 @@ function ImageModal({ src, alt, onClose }: { src: string; alt: string; onClose: 
   const [translate, setTranslate] = useState({ x: 0, y: 0 });
   const lastDistance = useRef<number | null>(null);
   const lastCenter = useRef<{ x: number; y: number } | null>(null);
+  const lastSingleTouch = useRef<{ x: number; y: number } | null>(null);
+  const isPanning = useRef(false);
   const imgRef = useRef<HTMLDivElement>(null);
 
   const getDistance = (touches: React.TouchList) => {
@@ -30,14 +32,25 @@ function ImageModal({ src, alt, onClose }: { src: string; alt: string; onClose: 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     if (e.touches.length === 2) {
       e.preventDefault();
+      isPanning.current = false;
+      lastSingleTouch.current = null;
       lastDistance.current = getDistance(e.touches);
       lastCenter.current = getCenter(e.touches);
+    } else if (e.touches.length === 1 && scale > 1) {
+      e.preventDefault();
+      isPanning.current = true;
+      lastSingleTouch.current = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY,
+      };
     }
-  }, []);
+  }, [scale]);
 
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
     if (e.touches.length === 2) {
       e.preventDefault();
+      isPanning.current = false;
+      lastSingleTouch.current = null;
       const newDistance = getDistance(e.touches);
       const newCenter = getCenter(e.touches);
 
@@ -54,6 +67,15 @@ function ImageModal({ src, alt, onClose }: { src: string; alt: string; onClose: 
 
       lastDistance.current = newDistance;
       lastCenter.current = newCenter;
+    } else if (e.touches.length === 1 && isPanning.current && lastSingleTouch.current && scale > 1) {
+      e.preventDefault();
+      const dx = e.touches[0].clientX - lastSingleTouch.current.x;
+      const dy = e.touches[0].clientY - lastSingleTouch.current.y;
+      setTranslate((prev) => ({ x: prev.x + dx, y: prev.y + dy }));
+      lastSingleTouch.current = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY,
+      };
     }
   }, [scale]);
 
@@ -61,6 +83,10 @@ function ImageModal({ src, alt, onClose }: { src: string; alt: string; onClose: 
     if (e.touches.length < 2) {
       lastDistance.current = null;
       lastCenter.current = null;
+    }
+    if (e.touches.length === 0) {
+      isPanning.current = false;
+      lastSingleTouch.current = null;
     }
     // Reset if zoomed out
     if (scale <= 1) {
