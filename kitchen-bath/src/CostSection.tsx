@@ -115,8 +115,79 @@ export default function CostSection() {
         </div>
       </div>
 
-      {/* Detailed Table */}
-      <div className="bg-card border border-border rounded-lg overflow-hidden">
+      {/* Mobile Card Layout */}
+      <div className="md:hidden space-y-3">
+        {costEstimates.map((item) => {
+          const totalLow = item.materialLow + item.laborLow;
+          const totalHigh = item.materialHigh + item.laborHigh;
+          return (
+            <div
+              key={item.id}
+              className="bg-card border border-border rounded-lg p-4 space-y-2"
+            >
+              <div className="flex items-center gap-2">
+                <Badge
+                  variant="outline"
+                  className={`text-[10px] font-medium ${roomColors[item.room]}`}
+                >
+                  {roomLabels[item.room][language]}
+                </Badge>
+                <span className="text-xs font-medium text-muted-foreground">
+                  {item.category[language]}
+                </span>
+              </div>
+              <div>
+                <p className="text-sm font-medium">{item.item[language]}</p>
+                {item.notes && (
+                  <p className="text-[11px] text-muted-foreground mt-0.5">
+                    {item.notes[language]}
+                  </p>
+                )}
+              </div>
+              <div className="flex flex-wrap gap-x-4 gap-y-1 pt-1 border-t border-border/50">
+                {(item.materialLow > 0 || item.materialHigh > 0) && (
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-[11px] text-muted-foreground">{t("costs.materialCost")}:</span>
+                    <span className="text-sm font-mono font-medium">{range(item.materialLow, item.materialHigh)}</span>
+                  </div>
+                )}
+                {(item.laborLow > 0 || item.laborHigh > 0) && (
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-[11px] text-muted-foreground">{t("costs.laborCost")}:</span>
+                    <span className="text-sm font-mono font-medium">{range(item.laborLow, item.laborHigh)}</span>
+                  </div>
+                )}
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-[11px] text-muted-foreground font-semibold">{t("costs.total")}:</span>
+                  <span className="text-sm font-mono font-bold text-primary">{range(totalLow, totalHigh)}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+        {/* Grand Total Card */}
+        <div className="bg-primary/5 border-2 border-primary/20 rounded-lg p-4">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-bold">{t("costs.grandTotal")}</span>
+            <span className="text-base font-mono font-bold text-primary">
+              {range(grandTotalLow, grandTotalHigh)}
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 pt-2 border-t border-primary/10">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[11px] text-muted-foreground">{t("costs.materialCost")}:</span>
+              <span className="text-sm font-mono font-semibold">{range(totalMaterialLow, totalMaterialHigh)}</span>
+            </div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[11px] text-muted-foreground">{t("costs.laborCost")}:</span>
+              <span className="text-sm font-mono font-semibold">{range(totalLaborLow, totalLaborHigh)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Table (hidden on mobile) */}
+      <div className="hidden md:block bg-card border border-border rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
