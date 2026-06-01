@@ -9,6 +9,20 @@ const KITCHEN_RENDERING_2 = "./images/kitchen_rendering_sink.png";
 const KITCHEN_RENDERING_3 = "./images/kitchen_rendering_entryway.png";
 const BATHROOM_RENDERING = "./images/bathroom_rendering.png";
 
+const KITCHEN_BEFORE = [
+  { src: "./images/kitchen_before_1.jpg", alt: "Kitchen before - galley view" },
+  { src: "./images/kitchen_before_2.jpg", alt: "Kitchen before - oven and dining" },
+  { src: "./images/kitchen_before_3.jpg", alt: "Kitchen before - stove area" },
+  { src: "./images/kitchen_before_4.jpg", alt: "Kitchen before - full view" },
+  { src: "./images/kitchen_before_5.jpg", alt: "Kitchen before - sink and fridge" },
+];
+
+const BATHROOM_BEFORE = [
+  { src: "./images/bathroom_before_1.jpg", alt: "Bathroom before - entry view" },
+  { src: "./images/bathroom_before_2.jpg", alt: "Bathroom before - vanity and toilet" },
+  { src: "./images/bathroom_before_3.jpg", alt: "Bathroom before - shower" },
+];
+
 function ImageModal({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
   const [scale, setScale] = useState(1);
   const [translate, setTranslate] = useState({ x: 0, y: 0 });
@@ -212,6 +226,33 @@ export default function OverviewSection() {
           <div>
             <p className="text-xs font-medium text-muted-foreground mb-2">{t("dim.rendering")}</p>
             <ClickableImage src={BATHROOM_RENDERING} alt="Bathroom rendering" />
+          </div>
+        </div>
+      </div>
+
+      {/* Before Photos */}
+      <div className="bg-card border border-border rounded-lg overflow-hidden">
+        <div className="px-5 py-4 border-b border-border">
+          <h3 className="text-sm font-semibold text-foreground">{t("dim.beforePhotos")}</h3>
+        </div>
+        <div className="p-5 space-y-4">
+          {/* Kitchen Before */}
+          <div>
+            <p className="text-xs font-medium text-muted-foreground mb-2">{t("dim.kitchenBefore")}</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {KITCHEN_BEFORE.map((img, i) => (
+                <ClickableImage key={i} src={img.src} alt={img.alt} />
+              ))}
+            </div>
+          </div>
+          {/* Bathroom Before */}
+          <div>
+            <p className="text-xs font-medium text-muted-foreground mb-2">{t("dim.bathroomBefore")}</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {BATHROOM_BEFORE.map((img, i) => (
+                <ClickableImage key={i} src={img.src} alt={img.alt} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

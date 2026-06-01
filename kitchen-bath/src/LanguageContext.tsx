@@ -75,6 +75,9 @@ const translations: Translations = {
   "dim.rendering": { en: "Design Rendering", zh: "设计效果图", vi: "Bản vẽ thiết kế", es: "Render de diseño" },
   "dim.kitchenDims": { en: "Kitchen Dimensions", zh: "厨房尺寸", vi: "Kích thước bếp", es: "Dimensiones de cocina" },
   "dim.bathroomDims": { en: "Bathroom Dimensions", zh: "浴室尺寸", vi: "Kích thước phòng tắm", es: "Dimensiones del baño" },
+  "dim.beforePhotos": { en: "Current State (Before)", zh: "现状（改造前）", vi: "Hiện trạng (Trước)", es: "Estado actual (Antes)" },
+  "dim.kitchenBefore": { en: "Kitchen — Before", zh: "厨房 — 改造前", vi: "Bếp — Trước cải tạo", es: "Cocina — Antes" },
+  "dim.bathroomBefore": { en: "Bathroom — Before", zh: "卫生间 — 改造前", vi: "Phòng tắm — Trước cải tạo", es: "Baño — Antes" },
 
   // General
   "general.language": { en: "Language", zh: "语言", vi: "Ngôn ngữ", es: "Idioma" },

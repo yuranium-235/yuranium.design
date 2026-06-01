@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Clock, CircleDot } from "lucide-react";
+import { CheckCircle2, Clock, CircleDot, ExternalLink } from "lucide-react";
 
 const roomColors = {
   kitchen: "bg-amber-50 text-amber-700 border-amber-200",
@@ -100,7 +100,14 @@ export default function BOMSection() {
                 )}
               </div>
               {item.product && (
-                <p className="text-xs text-muted-foreground">{item.product}</p>
+                <p className="text-xs text-muted-foreground">
+                  {item.productUrl ? (
+                    <a href={item.productUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-blue-600 hover:underline">
+                      {item.product}
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  ) : item.product}
+                </p>
               )}
               <div className="flex flex-wrap gap-x-4 gap-y-1 pt-1 border-t border-border/50">
                 <div className="flex items-baseline gap-1.5">
@@ -159,7 +166,14 @@ export default function BOMSection() {
                       )}
                     </TableCell>
                     <TableCell className="py-2.5">
-                      <span className="text-xs text-muted-foreground">{item.product}</span>
+                      {item.productUrl ? (
+                        <a href={item.productUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-blue-600 hover:underline">
+                          {item.product}
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">{item.product}</span>
+                      )}
                     </TableCell>
                     <TableCell className="text-center text-xs py-2.5">{item.quantity}</TableCell>
                     <TableCell className="text-right font-mono text-sm py-2.5">
