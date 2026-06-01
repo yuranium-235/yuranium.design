@@ -38,6 +38,11 @@ const statusConfig = {
   },
 };
 
+function costRange(low: number, high: number) {
+  if (low === high) return `$${low.toLocaleString()}`;
+  return `$${low.toLocaleString()} – $${high.toLocaleString()}`;
+}
+
 export default function BOMSection() {
   const { language, t } = useLanguage();
 
@@ -66,7 +71,56 @@ export default function BOMSection() {
         </div>
       </div>
 
-      <div className="bg-card border border-border rounded-lg overflow-hidden">
+      {/* Mobile Card Layout */}
+      <div className="md:hidden space-y-3">
+        {billOfMaterials.map((item) => {
+          const StatusIcon = statusConfig[item.status].icon;
+          const statusLabel = t(`bom.${item.status}`);
+          const statusColor = item.status === "purchased" ? "text-green-600" : item.status === "decided" ? "text-blue-600" : "text-orange-500";
+          return (
+            <div
+              key={item.id}
+              className="bg-card border border-border rounded-lg p-4 space-y-2"
+            >
+              <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center gap-1">
+                  <StatusIcon className={`w-3.5 h-3.5 ${statusColor}`} />
+                  <span className="text-[11px] text-muted-foreground">{statusLabel}</span>
+                </div>
+                <Badge variant="outline" className={`text-[10px] ${roomColors[item.room]}`}>
+                  {roomLabels[item.room][language]}
+                </Badge>
+              </div>
+              <div>
+                <p className="text-sm font-medium">{item.item[language]}</p>
+                {item.notes && (
+                  <p className="text-[11px] text-muted-foreground mt-0.5">
+                    {item.notes[language]}
+                  </p>
+                )}
+              </div>
+              {item.product && (
+                <p className="text-xs text-muted-foreground">{item.product}</p>
+              )}
+              <div className="flex flex-wrap gap-x-4 gap-y-1 pt-1 border-t border-border/50">
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-[11px] text-muted-foreground">{t("bom.quantity")}:</span>
+                  <span className="text-sm font-medium">{item.quantity}</span>
+                </div>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-[11px] text-muted-foreground font-semibold">{t("bom.totalCost")}:</span>
+                  <span className="text-sm font-mono font-bold text-primary">
+                    {costRange(item.unitCostLow, item.unitCostHigh)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Desktop Table (hidden on mobile) */}
+      <div className="hidden md:block bg-card border border-border rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
@@ -109,9 +163,7 @@ export default function BOMSection() {
                     </TableCell>
                     <TableCell className="text-center text-xs py-2.5">{item.quantity}</TableCell>
                     <TableCell className="text-right font-mono text-sm py-2.5">
-                      {item.unitCostLow === item.unitCostHigh
-                        ? `$${item.unitCostLow.toLocaleString()}`
-                        : `$${item.unitCostLow.toLocaleString()} – $${item.unitCostHigh.toLocaleString()}`}
+                      {costRange(item.unitCostLow, item.unitCostHigh)}
                     </TableCell>
                   </TableRow>
                 );
