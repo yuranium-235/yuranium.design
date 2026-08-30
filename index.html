@@ -26,7 +26,6 @@
   <link rel="me" href="https://www.linkedin.com/in/michaelyu84/" />
   <link rel="me" href="https://github.com/yuranium-235" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -103,7 +102,6 @@
     ]
   }
   </script>
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -124,7 +122,6 @@
     ]
   }
   </script>
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -143,315 +140,84 @@
     ]
   }
   </script>
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Space Grotesk', 'Inter', sans-serif;
-      background: #0D0D0D;
-      color: #E8E8E8;
-      min-height: 100vh;
-      line-height: 1.6;
-    }
+    body { font-family: 'Space Grotesk', 'Inter', sans-serif; background: #0D0D0D; color: #E8E8E8; min-height: 100vh; line-height: 1.6; }
     a { color: inherit; }
-
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(13,13,13,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(201,168,76,0.15);
-      padding: 0 2rem;
-    }
-    .nav-inner {
-      max-width: 1200px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
-    }
-    .nav-logo {
-      font-family: 'Space Mono', monospace;
-      font-size: 18px; font-weight: 700;
-      color: #C9A84C; letter-spacing: 0.05em;
-      text-decoration: none;
-    }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(13,13,13,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201,168,76,0.15); padding: 0 2rem; }
+    .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; color: #C9A84C; letter-spacing: 0.05em; text-decoration: none; }
     .nav-logo span { color: #E8E8E8; opacity: 0.4; }
     .nav-links { display: flex; gap: 2rem; }
-    .nav-links a {
-      font-size: 13px; font-weight: 500;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: #A0A0A0; text-decoration: none;
-      transition: color 0.2s;
-    }
+    .nav-links a { font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #A0A0A0; text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: #C9A84C; }
-
-    /* HERO */
-    .hero {
-      min-height: 100vh; position: relative;
-      display: flex; align-items: center; overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background-image: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663369013021/W6PHqEe8bVmgPywmzYh9Re/yuranium_hero_6a6505f2.jpg');
-      background-size: cover; background-position: center right;
-      opacity: 0.85;
-    }
-    .hero-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to right, rgba(13,13,13,0.95) 35%, rgba(13,13,13,0.5) 65%, rgba(13,13,13,0.15) 100%);
-    }
-    .hero-content {
-      position: relative; max-width: 1200px;
-      margin: 0 auto; padding: 0 2rem; padding-top: 80px;
-    }
-    .hero-eyebrow {
-      font-family: 'Space Mono', monospace;
-      font-size: 12px; letter-spacing: 0.2em;
-      color: #C9A84C; text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-    .hero-name {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.8rem, 7vw, 6rem);
-      font-weight: 700; line-height: 1.0;
-      letter-spacing: 0.05em; text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      max-width: 700px;
-    }
+    .hero { min-height: 100vh; position: relative; display: flex; align-items: center; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background-image: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663369013021/W6PHqEe8bVmgPywmzYh9Re/yuranium_hero_6a6505f2.jpg'); background-size: cover; background-position: center right; opacity: 0.85; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(13,13,13,0.95) 35%, rgba(13,13,13,0.5) 65%, rgba(13,13,13,0.15) 100%); }
+    .hero-content { position: relative; max-width: 1200px; margin: 0 auto; padding: 0 2rem; padding-top: 80px; }
+    .hero-eyebrow { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.2em; color: #C9A84C; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .hero-name { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 700; line-height: 1.0; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1.5rem; max-width: 700px; }
     .hero-name span { color: #C9A84C; }
-    .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: #A0A0A0; max-width: 520px;
-      line-height: 1.7; margin-bottom: 2.5rem;
-    }
+    .hero-sub { font-size: clamp(1rem, 2vw, 1.25rem); color: #A0A0A0; max-width: 520px; line-height: 1.7; margin-bottom: 2.5rem; }
     .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .btn-primary {
-      background: #C9A84C; color: #0D0D0D;
-      padding: 0.75rem 2rem; font-weight: 700;
-      font-size: 14px; letter-spacing: 0.08em;
-      text-transform: uppercase; text-decoration: none;
-      display: inline-block;
-    }
-    .btn-outline {
-      border: 1px solid rgba(201,168,76,0.4);
-      color: #C9A84C; padding: 0.75rem 2rem;
-      font-weight: 600; font-size: 14px;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      text-decoration: none; display: inline-block;
-    }
-
-    /* METRICS */
-    .metrics {
-      background: #111111;
-      border-top: 1px solid rgba(201,168,76,0.2);
-      border-bottom: 1px solid rgba(201,168,76,0.2);
-      padding: 2.5rem 2rem;
-    }
-    .metrics-grid {
-      max-width: 1200px; margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 2rem; text-align: center;
-    }
-    .metric-value {
-      font-family: 'Space Mono', monospace;
-      font-size: clamp(2rem, 4vw, 2.75rem);
-      font-weight: 700; color: #C9A84C; line-height: 1;
-    }
-    .metric-label {
-      font-size: 12px; color: #666;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      margin-top: 0.5rem;
-    }
-
-    /* SECTIONS */
+    .btn-primary { background: #C9A84C; color: #0D0D0D; padding: 0.75rem 2rem; font-weight: 700; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; display: inline-block; }
+    .btn-outline { border: 1px solid rgba(201,168,76,0.4); color: #C9A84C; padding: 0.75rem 2rem; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; display: inline-block; }
+    .metrics { background: #111111; border-top: 1px solid rgba(201,168,76,0.2); border-bottom: 1px solid rgba(201,168,76,0.2); padding: 2.5rem 2rem; }
+    .metrics-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 2rem; text-align: center; }
+    .metric-value { font-family: 'Space Mono', monospace; font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; color: #C9A84C; line-height: 1; }
+    .metric-label { font-size: 12px; color: #666; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.5rem; }
     .section { padding: 6rem 2rem; }
     .section-dark { background: #0A0A0A; }
     .section-inner { max-width: 1200px; margin: 0 auto; }
-    .section-eyebrow {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px; letter-spacing: 0.2em;
-      color: #C9A84C; text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .section-title {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700; letter-spacing: -0.02em;
-      margin-bottom: 3rem; max-width: 700px;
-    }
+    .section-eyebrow { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: #C9A84C; text-transform: uppercase; margin-bottom: 1rem; }
+    .section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 3rem; max-width: 700px; }
     .section-title span { color: #C9A84C; }
-
-    /* ABOUT */
-    .about-bg {
-      position: absolute; inset: 0;
-      background-image: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663369013021/W6PHqEe8bVmgPywmzYh9Re/yuranium_about_bg_2dd3fc8a.jpg');
-      background-size: cover; background-position: center;
-      opacity: 0.15;
-    }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 3rem; max-width: 1000px;
-    }
+    .about-bg { position: absolute; inset: 0; background-image: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663369013021/W6PHqEe8bVmgPywmzYh9Re/yuranium_about_bg_2dd3fc8a.jpg'); background-size: cover; background-position: center; opacity: 0.15; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1000px; }
     .about-text { color: #A0A0A0; line-height: 1.8; font-size: 16px; margin-bottom: 1.5rem; }
-    .blockquote {
-      border-left: 2px solid #C9A84C;
-      padding-left: 1.5rem; margin-top: 2rem;
-    }
-    .blockquote p {
-      color: #E8E8E8; font-size: 15px;
-      font-style: italic; line-height: 1.7;
-    }
-
-    /* CHARTS */
+    .blockquote { border-left: 2px solid #C9A84C; padding-left: 1.5rem; margin-top: 2rem; }
+    .blockquote p { color: #E8E8E8; font-size: 15px; font-style: italic; line-height: 1.7; }
     .chart-img { width: 100%; max-width: 1000px; display: block; border-radius: 4px; }
-    .chart-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-    }
-    .chart-eyebrow {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px; letter-spacing: 0.2em;
-      color: #C9A84C; text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .scorecard-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 4rem; align-items: center;
-    }
-
-    /* EXPERIENCE — background image per entry */
+    .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .chart-eyebrow { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: #C9A84C; text-transform: uppercase; margin-bottom: 1rem; }
+    .scorecard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
     .exp-list { display: flex; flex-direction: column; gap: 0; }
-    .exp-entry {
-      position: relative;
-      padding: 3rem 3rem 3rem 2.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      overflow: hidden;
-      background-size: cover;
-      background-position: center right;
-      background-repeat: no-repeat;
-    }
+    .exp-entry { position: relative; padding: 3rem 3rem 3rem 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.06); overflow: hidden; background-size: cover; background-position: center right; background-repeat: no-repeat; }
     .exp-entry:last-child { border-bottom: none; }
-    /* Dark overlay so text stays readable */
-    .exp-entry::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to right,
-        rgba(10,10,10,0.97) 0%,
-        rgba(10,10,10,0.92) 50%,
-        rgba(10,10,10,0.78) 75%,
-        rgba(10,10,10,0.55) 100%
-      );
-      z-index: 0;
-    }
+    .exp-entry::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.92) 50%, rgba(10,10,10,0.78) 75%, rgba(10,10,10,0.55) 100%); z-index: 0; }
     .exp-entry > * { position: relative; z-index: 1; }
-    .exp-entry-accent {
-      width: 3px; height: 28px;
-      background: #C9A84C;
-      margin-bottom: 1.5rem;
-    }
+    .exp-entry-accent { width: 3px; height: 28px; background: #C9A84C; margin-bottom: 1.5rem; }
     .exp-company { font-size: 22px; font-weight: 700; color: #E8E8E8; margin-bottom: 0.25rem; }
     .exp-role { font-size: 14px; color: #A0A0A0; margin-bottom: 0.75rem; }
     .exp-header { display: flex; flex-direction: column; gap: 0.25rem; }
     .exp-meta { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
     .exp-period { font-family: 'Space Mono', monospace; font-size: 11px; color: #666; }
-    .exp-tag {
-      font-size: 11px; color: #888;
-      background: rgba(255,255,255,0.05);
-      padding: 0.15rem 0.5rem; border-radius: 2px;
-    }
-    .exp-bullets {
-      padding-left: 1.25rem;
-      display: flex; flex-direction: column; gap: 0.75rem;
-      max-width: 680px;
-    }
+    .exp-tag { font-size: 11px; color: #888; background: rgba(255,255,255,0.05); padding: 0.15rem 0.5rem; border-radius: 2px; }
+    .exp-bullets { padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; max-width: 680px; }
     .exp-bullets li { color: #A0A0A0; font-size: 14px; line-height: 1.7; }
-
-    /* PATENTS */
-    .patent-row {
-      display: grid;
-      grid-template-columns: 200px 1fr 80px 100px;
-      gap: 1.5rem; align-items: center;
-      padding: 1.25rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .patent-number {
-      font-family: 'Space Mono', monospace;
-      font-size: 12px; color: #C9A84C; font-weight: 700;
-    }
+    .patent-row { display: grid; grid-template-columns: 200px 1fr 80px 100px; gap: 1.5rem; align-items: center; padding: 1.25rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .patent-number { font-family: 'Space Mono', monospace; font-size: 12px; color: #C9A84C; font-weight: 700; }
     .patent-title { font-size: 14px; color: #E8E8E8; line-height: 1.4; }
     .patent-date { font-size: 12px; color: #666; }
-    .patent-badge {
-      font-size: 11px; padding: 0.25rem 0.75rem;
-      border-radius: 2px; text-align: center;
-      font-weight: 600; letter-spacing: 0.05em;
-    }
+    .patent-badge { font-size: 11px; padding: 0.25rem 0.75rem; border-radius: 2px; text-align: center; font-weight: 600; letter-spacing: 0.05em; }
     .badge-granted { background: rgba(34,197,94,0.15); color: #4ade80; }
     .badge-pending { background: rgba(201,168,76,0.15); color: #C9A84C; }
     .badge-application { background: rgba(100,100,100,0.15); color: #888; }
-
-    /* CONTACT */
-    .contact-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 4rem; align-items: center;
-    }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
     .contact-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .btn-primary-lg {
-      background: #C9A84C; color: #0D0D0D;
-      padding: 0.875rem 2.5rem; font-weight: 700;
-      font-size: 14px; letter-spacing: 0.08em;
-      text-transform: uppercase; text-decoration: none;
-      display: inline-block;
-    }
-    .btn-outline-lg {
-      border: 1px solid rgba(201,168,76,0.4);
-      color: #C9A84C; padding: 0.875rem 2.5rem;
-      font-weight: 600; font-size: 14px;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      text-decoration: none; display: inline-block;
-    }
-    .contact-cards {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-    .contact-card {
-      padding: 1.25rem; background: #111;
-      border-left: 2px solid rgba(201,168,76,0.3);
-    }
-    .contact-card-label {
-      font-size: 11px; color: #666;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
+    .btn-primary-lg { background: #C9A84C; color: #0D0D0D; padding: 0.875rem 2.5rem; font-weight: 700; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; display: inline-block; }
+    .btn-outline-lg { border: 1px solid rgba(201,168,76,0.4); color: #C9A84C; padding: 0.875rem 2.5rem; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; display: inline-block; }
+    .contact-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .contact-card { padding: 1.25rem; background: #111; border-left: 2px solid rgba(201,168,76,0.3); }
+    .contact-card-label { font-size: 11px; color: #666; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
     .contact-card-value { font-size: 14px; color: #E8E8E8; line-height: 1.4; }
-
-    /* FOOTER */
-    footer {
-      background: #080808;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 2rem; text-align: center;
-    }
-    footer p {
-      font-family: 'Space Mono', monospace;
-      font-size: 12px; color: #444; letter-spacing: 0.1em;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .about-grid { grid-template-columns: 1fr; }
-      .scorecard-grid { grid-template-columns: 1fr; }
-      .chart-grid { grid-template-columns: 1fr; }
-      .contact-grid { grid-template-columns: 1fr; }
-      .contact-cards { grid-template-columns: 1fr; }
-      .patent-row { grid-template-columns: 1fr; gap: 0.5rem; }
-      .patent-date, .patent-badge { display: none; }
-    }
+    footer { background: #080808; border-top: 1px solid rgba(255,255,255,0.06); padding: 2rem; text-align: center; }
+    footer p { font-family: 'Space Mono', monospace; font-size: 12px; color: #444; letter-spacing: 0.1em; }
+    @media (max-width: 768px) { .nav-links { display: none; } .about-grid { grid-template-columns: 1fr; } .scorecard-grid { grid-template-columns: 1fr; } .chart-grid { grid-template-columns: 1fr; } .contact-grid { grid-template-columns: 1fr; } .contact-cards { grid-template-columns: 1fr; } .patent-row { grid-template-columns: 1fr; gap: 0.5rem; } .patent-date, .patent-badge { display: none; } }
   </style>
 </head>
 <body>
-
   <!-- NAV -->
   <nav>
     <div class="nav-inner">
@@ -464,7 +230,6 @@
       </div>
     </div>
   </nav>
-
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg"></div>
@@ -472,18 +237,13 @@
     <div class="hero-content">
       <p class="hero-eyebrow">Hardware Engineering Leader</p>
       <h1 class="hero-name">Michael<br><span>Yu</span></h1>
-      <p class="hero-sub">
-        15+ years setting engineering direction, building organizations from scratch,
-        and shipping 50M+ units. I define what to build, structure teams to build it,
-        and architect risk out of programs before problems materialize.
-      </p>
+      <p class="hero-sub">15+ years setting engineering direction, building organizations from scratch, and shipping 50M+ units. I define what to build, structure teams to build it, and architect risk out of programs before problems materialize.</p>
       <div class="hero-btns">
         <a href="#experience" class="btn-primary">View Experience</a>
         <a href="https://www.linkedin.com/in/michaelyu84/" target="_blank" rel="noopener noreferrer" class="btn-outline">LinkedIn</a>
       </div>
     </div>
   </section>
-
   <!-- METRICS -->
   <section class="metrics">
     <div class="metrics-grid">
@@ -494,7 +254,6 @@
       <div><div class="metric-value">0</div><div class="metric-label">Preventable Failures Shipped</div></div>
     </div>
   </section>
-
   <!-- ABOUT -->
   <section id="about" class="section" style="position:relative;overflow:hidden;">
     <div class="about-bg"></div>
@@ -503,42 +262,30 @@
       <h2 class="section-title">I don't just ship products. I <span>architect the conditions</span> for them to succeed.</h2>
       <div class="about-grid">
         <div>
-          <p class="about-text">
-            The hardest problems in hardware aren't the ones you solve — they're the ones you prevent. Over 15+ years across Meta, Google, Amazon, and Oculus, I've learned that the difference between programs that ship on time and programs that don't comes down to three things: the right engineering strategy set early, the right team structure to execute it, and the discipline to front-load risk before it becomes a schedule crisis.
-          </p>
-          <p class="about-text">
-            I operate at the intersection of technical direction and organizational design — defining product architecture, structuring teams for velocity and accountability, and making the high-stakes tradeoffs between cost, schedule, quality, and industrial design that determine whether a product ships as envisioned or ships as a compromise.
-          </p>
+          <p class="about-text">The hardest problems in hardware aren't the ones you solve — they're the ones you prevent. Over 15+ years across Meta, Google, Amazon, and Oculus, I've learned that the difference between programs that ship on time and programs that don't comes down to three things: the right engineering strategy set early, the right team structure to execute it, and the discipline to front-load risk before it becomes a schedule crisis.</p>
+          <p class="about-text">I operate at the intersection of technical direction and organizational design — defining product architecture, structuring teams for velocity and accountability, and making the high-stakes tradeoffs between cost, schedule, quality, and industrial design that determine whether a product ships as envisioned or ships as a compromise.</p>
         </div>
         <div>
-          <p class="about-text">
-            At every company, I've built engineering organizations from scratch — standing up PD teams, establishing design review cadences, creating tolerance analysis standards, and codifying processes that outlast any single program. I've led both JDM/ODM and in-house detailed design models at scale, and I know when each is the right call. Native Mandarin fluency gives me a structural advantage in China-based manufacturing, enabling direct technical communication at the factory floor level.
-          </p>
-          <p class="about-text">
-            I also actively integrate AI tools into hardware engineering workflows — from accelerating FEA interpretation and risk analysis to building custom tools that help entire teams make faster, higher-confidence decisions. The future of hardware leadership isn't just about what you know — it's about how fast your organization can learn and adapt.
-          </p>
+          <p class="about-text">At every company, I've built engineering organizations from scratch — standing up PD teams, establishing design review cadences, creating tolerance analysis standards, and codifying processes that outlast any single program. I've led both JDM/ODM and in-house detailed design models at scale, and I know when each is the right call. Native Mandarin fluency gives me a structural advantage in China-based manufacturing, enabling direct technical communication at the factory floor level.</p>
+          <p class="about-text">I also actively integrate AI tools into hardware engineering workflows — from accelerating FEA interpretation and risk analysis to building custom tools that help entire teams make faster, higher-confidence decisions. The future of hardware leadership isn't just about what you know — it's about how fast your organization can learn and adapt.</p>
         </div>
       </div>
     </div>
   </section>
-
   <!-- SHIPPED PRODUCTS CHART -->
   <section class="section section-dark" style="padding-top:4rem;padding-bottom:4rem;">
     <div class="section-inner">
       <p class="section-eyebrow">Product Portfolio</p>
       <h2 style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:2rem;">18 Years of Shipped Products</h2>
-      <img class="chart-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663369013021/syqYCrODdkVzxIOO.png" alt="Shipped Product Portfolio — 18 Years, 15+ Flagship Products" />
+      <img class="chart-img" src="/product_portfolio_dark.png" alt="Shipped Product Portfolio — 18 Years, 15+ Flagship Products" />
     </div>
   </section>
-
   <!-- EXPERIENCE -->
   <section id="experience" class="section">
     <div class="section-inner">
       <p class="section-eyebrow">02 / Experience</p>
       <h2 class="section-title" style="margin-bottom:3rem;max-width:none;">Career History</h2>
-
       <div class="exp-list">
-
         <div class="exp-entry" style="background-image:url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663369013021/HXMZswVLNTnUurdl.jpeg');">
           <div class="exp-entry-accent"></div>
           <div class="exp-header">
@@ -559,7 +306,6 @@
             <li>Pioneering AI integration into hardware engineering workflows — built custom tools for FEA interpretation, risk analysis, cost optimization, and failure analysis that accelerate decision-making across the broader team</li>
           </ul>
         </div>
-
         <div class="exp-entry" style="background-image:url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663369013021/lRGDBCfYGgXkcRgW.jpg');">
           <div class="exp-entry-accent"></div>
           <div class="exp-header">
@@ -579,7 +325,6 @@
             <li>Drove architectural development of next-generation devices, integrating advanced technologies in under-display sensors, foldable displays, and miniaturized camera systems</li>
           </ul>
         </div>
-
         <div class="exp-entry" style="background-image:url('https://media.wired.com/photos/5babc8da80ec002859e56ad0/3:2/w_2240,c_limit/quest_front.jpg');">
           <div class="exp-entry-accent"></div>
           <div class="exp-header">
@@ -599,7 +344,6 @@
             <li>Named inventor on utility patents for IPD adjustment, speaker beam-steering, multi-layer housings, and HMD optics</li>
           </ul>
         </div>
-
         <div class="exp-entry" style="background-image:url('https://www.cultofmac.com/wp-content/uploads/2016/09/Echo-Dot-black-and-white-1-e1473878504212.jpg');">
           <div class="exp-entry-accent"></div>
           <div class="exp-header">
@@ -619,7 +363,6 @@
             <li>Promoted to Technical Lead Manager, managing 4 engineers directly by end of tenure</li>
           </ul>
         </div>
-
         <div class="exp-entry" style="background-image:url('https://www.thesun.co.uk/wp-content/uploads/2017/01/nintchdbpict000292285870.jpg?resize=1536,922&quality=90&strip=all');">
           <div class="exp-entry-accent"></div>
           <div class="exp-header">
@@ -639,15 +382,9 @@
             <li>Filed charger device patent application (US 20120098491) — earliest IP generation, Year 1 of career</li>
           </ul>
         </div>
-
-      </div><!-- end .exp-list -->
+      </div>
     </div>
   </section>
-
-
-
-
-
   <!-- VELOCITY + SKILLS -->
   <section class="section" style="padding-top:4rem;padding-bottom:4rem;background:#0D0D0D;">
     <div class="section-inner">
@@ -655,27 +392,24 @@
         <div>
           <p class="chart-eyebrow">Shipping Velocity</p>
           <div style="background:#111;border:1px solid rgba(201,168,76,0.15);border-radius:4px;padding:1rem;">
-            <img class="chart-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663369013021/USvApInWrHSRqUMI.png" alt="Shipping Velocity - Consistent Execution Over 18 Years" style="width:100%;border-radius:4px;" />
+            <img class="chart-img" src="/velocity_dark.png" alt="Shipping Velocity - Consistent Execution Over 18 Years" style="width:100%;border-radius:4px;" />
           </div>
         </div>
         <div>
           <p class="chart-eyebrow">Skill Architecture</p>
           <div style="background:#111;border:1px solid rgba(201,168,76,0.15);border-radius:4px;padding:1rem;">
-            <img class="chart-img" src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663369013021/KuWhxPBnMvaBvyEo.png" alt="Core Competency Radar - Skill Architecture" style="width:100%;border-radius:4px;" />
+            <img class="chart-img" src="/skill_dark.png" alt="Core Competency Radar - Skill Architecture" style="width:100%;border-radius:4px;" />
           </div>
         </div>
       </div>
     </div>
   </section>
-
   <!-- PATENTS -->
   <section id="patents" class="section section-dark">
     <div class="section-inner">
       <p class="section-eyebrow">03 / Invention Portfolio</p>
       <h2 class="section-title" style="margin-bottom:1rem;">36+ USPTO Patents</h2>
-      <p style="color:#A0A0A0;font-size:16px;line-height:1.8;margin-bottom:2.5rem;max-width:700px;">
-        Continuous IP generation from Year 1 (2009) through 2026. Spanning phone accessories, VR mechanics, speaker systems, battery architecture, and smart glasses servicing.
-      </p>
+      <p style="color:#A0A0A0;font-size:16px;line-height:1.8;margin-bottom:2.5rem;max-width:700px;">Continuous IP generation from Year 1 (2009) through 2026. Spanning phone accessories, VR mechanics, speaker systems, battery architecture, and smart glasses servicing.</p>
       <div>
         <div class="patent-row">
           <span class="patent-number">US 20260079358</span>
@@ -739,13 +473,10 @@
         </div>
       </div>
       <div style="margin-top:2rem;">
-        <a href="/patents" style="display:inline-flex;align-items:center;gap:0.5rem;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#C9A84C;text-decoration:none;border:1px solid rgba(201,168,76,0.3);padding:0.75rem 1.5rem;transition:all 0.2s;" onmouseover="this.style.background='rgba(201,168,76,0.08)';this.style.borderColor='#C9A84C'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(201,168,76,0.3)'">
-          View Full Patent Portfolio &rarr;
-        </a>
+        <a href="/patents" style="display:inline-flex;align-items:center;gap:0.5rem;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#C9A84C;text-decoration:none;border:1px solid rgba(201,168,76,0.3);padding:0.75rem 1.5rem;transition:all 0.2s;" onmouseover="this.style.background='rgba(201,168,76,0.08)';this.style.borderColor='#C9A84C'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(201,168,76,0.3)'">View Full Patent Portfolio &rarr;</a>
       </div>
     </div>
   </section>
-
   <!-- CONTACT -->
   <section id="contact" class="section" style="border-top:1px solid rgba(201,168,76,0.15);">
     <div class="section-inner">
@@ -787,14 +518,11 @@
       </div>
     </div>
   </section>
-
   <!-- FOOTER -->
   <footer>
     <p>© 2026 MICHAEL XINGYI YU · YURANIUM.DESIGN · SAN FRANCISCO BAY AREA</p>
   </footer>
-
   <script>
-    // Toggle + / - on experience cards
     document.querySelectorAll('details.exp-card').forEach(function(el) {
       el.addEventListener('toggle', function() {
         var toggle = el.querySelector('.exp-toggle');
@@ -802,10 +530,6 @@
       });
     });
   </script>
-
-  <!-- GoatCounter analytics -->
-  <script data-goatcounter="https://yuranium.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>
-
+  <script data-goatcounter="https://yuranium.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
